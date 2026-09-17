@@ -1,0 +1,34 @@
+name: Import approved social image
+on:
+  push:
+    branches: [feature/social-preview-card]
+    paths: ['.github/workflows/import-social-card.yml']
+permissions:
+  contents: write
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - name: Import and verify this one publication asset
+        run: |
+          python3 - <<'PY'
+          import hashlib, pathlib, struct, urllib.request
+          url = 'https://v3b.fal.media/files/b/0aaad977/u7Byy0vlnxtWyyI-0u8D4_parallel-agent-engineering-social-card.png'
+          with urllib.request.urlopen(url, timeout=30) as response:
+              assert response.status == 200
+              data = response.read(1000000)
+          assert len(data) == 725848
+          assert hashlib.sha256(data).hexdigest() == '45869bd494411d7c05298b3e1f106e0010711277a037b70b56c3e48184453156'
+          assert data[:8] == b'\x89PNG\r\n\x1a\n'
+          assert struct.unpack('>II', data[16:24]) == (1200, 627)
+          destination = pathlib.Path('articles/parallel-agent-engineering/assets/og-parallel-agents-v1.png')
+          destination.write_bytes(data)
+          print('Verified PNG: 1200 x 627, 725848 bytes, exact approved hash')
+          PY
+      - name: Commit only the verified image on the isolated branch
+        run: |
+          git add articles/parallel-agent-engineering/assets/og-parallel-agents-v1.png
+          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'assets: add generated raster social preview for parallel-agent article'
+          git push origin HEAD:feature/social-preview-card
