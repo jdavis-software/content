@@ -1,0 +1,41 @@
+name: Verify prepared DevOps integration
+on:
+  push:
+    branches: [feature/interactive-devops]
+    paths: ['.github/workflows/finalize-devops.yml']
+permissions:
+  contents: write
+jobs:
+  integrate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Apply exact pretested integration edits
+        run: |
+          python3 - <<'PY'
+          import hashlib, json, pathlib
+          ops = json.loads(r'''[{"path":".github/workflows/deploy-pages.yml","before":"1267c251788f1dbdf7255acdaccaa14afb2e16eba46532375113e6743b6b0137","edits":[[1278,1278,"devops-flow.js', 'devops-model.js', 'devops-flow.css', '"],[1786,1787,"Ag"],[1788,1789,"nt diagram not served yet'\n                          assert b'id=\"devops-invalidation\"' in data, 'DevOps"]],"after":"8c2fa5ca00201920d6a5101375a009a698b1505791e997e78d37c23667745763"},{"path":"lib/content.mjs","before":"baf0beeb19fba25c8a78054e35b292e8ea6998b2cf65647002666d42a440ddda","edits":[[7441,7441,"devops-flow.mjs','site/devops-model.js','site/devops-flow.js','site/devops-flow.css','lib/"]],"after":"490f0e1b6623188131c84db10358993b3cb6063ec887a346340c71703232bf56"},{"path":"lib/site.mjs","before":"5f3eaa8b5c05eb0ba16f66ca94298a6c7bf5e923d6999b350204752d9882ecac","edits":[[0,0,"import {insertDevops} from './devops-flow.mjs';\n"],[2478,2478,"-flow.js\"></script><link rel=\"stylesheet\" href=\"${base}/devops-flow.css\"><script type=\"module\" src=\"${base}/devops"],[7576,9067,""],[9137,9137,"\n  if(p.slug==='parallel-agent-engineering') {\n    rendered.html=insertDevops(rendered.html);\n    const at=rendered.toc.findIndex(h=>h.id.startsWith('postgresql-belongs'));\n    rendered.toc.splice(at,0,{id:'devops-title',text:'Interactive: the delivery system'});\n  }"],[10360,10409,""],[18356,18356,"devops-flow.css', 'devops-flow.js', 'devops-model.js', '"]],"after":"e273dd9a75e7abe6029430aef2e709bf43b4b4b67eb334a089b35e0a2d0296f3"}]''')
+          for op in ops:
+              p = pathlib.Path(op['path'])
+              assert hashlib.sha256(p.read_bytes()).hexdigest() == op['before'], 'Base changed: ' + str(p)
+              text = p.read_text()
+              for start, end, replacement in reversed(op['edits']):
+                  text = text[:start] + replacement + text[end:]
+              assert hashlib.sha256(text.encode()).hexdigest() == op['after'], 'Prepared output mismatch: ' + str(p)
+              p.write_text(text)
+          expected = {'docs/DEVOPS-DIAGRAM.md':'17041f0ab90dec9ff2b271ba107a6e541ec4ce97d84fad2932039da1bcf10ba7','lib/devops-flow.mjs':'963765f1870409080049b25e53726e5dce6f937b120882d0a23e7fa006608dc5','site/devops-flow.css':'a0de67d6a7d39d04b1f834826657628042f644df4dccddc74ae437c25c07223e','site/devops-flow.js':'a62ac2864d52ebfe41a5bba806b1910faf2b673318ccc2315a21426ff1898d3a','site/devops-model.js':'256a6c3bdf09deaa14bac0d5029dc22d43da9465e1940e3052a69a46f57b0468','tests/devops.test.mjs':'4eee81c849d617531764a28e235c96cf3d44cd3c7046a82dce4bcdc3e84d6ebe'}
+          for file, digest in expected.items():
+              assert hashlib.sha256(pathlib.Path(file).read_bytes()).hexdigest() == digest, 'Source differs from local test: ' + file
+          PY
+      - run: npm run check
+      - name: Remove temporary helpers and commit to the isolated feature branch
+        run: |
+          git rm .github/workflows/prepare-devops.yml .github/workflows/finalize-devops.yml
+          git add lib/content.mjs lib/site.mjs .github/workflows/deploy-pages.yml
+          test "$(git write-tree)" = cee122f391e19b277b0f5f0cbbd5adfb45900517
+          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'feat: integrate tested interactive DevOps and cache model'
+          git push origin HEAD:feature/interactive-devops
