@@ -1,6 +1,6 @@
 The most useful question I have found to ask about coding agents is not “How fast can this model write code?” It is “How much independent work can my engineering system safely accept?”
 
-That question is changing how I structure repositories, define tasks, and think about delivery. In my DriftGate rebuild, TypeScript 7, Go, Nx, ESM, generated contracts, and isolated Git worktrees are parts of the same approach: make the work explicit enough that agents can execute independently without repeatedly rediscovering the system.
+That question is changing how I structure repositories, define tasks, and think about delivery. TypeScript 7, Go, Nx, ESM, generated contracts, and isolated Git worktrees are all parts of the same approach: make the work explicit enough that agents can execute independently without repeatedly rediscovering the system.
 
 The compiler matters. So do the files an agent has to read, the interfaces it can trust, the outputs it is allowed to write, and the infrastructure it has to wait for.
 
@@ -129,7 +129,7 @@ The schema and generator configuration are versioned inputs. Generated output st
 
 The same principle applies before the first line of feature logic.
 
-The rebuild includes bounded feature generators for Go and the console. They establish the expected files, companion tests, and relevant boundaries. Console generation requires an explicit server or client choice; existing targets are rejected rather than overwritten.
+The approach includes bounded feature generators for Go and the console. They establish the expected files, companion tests, and relevant boundaries. Console generation requires an explicit server or client choice; existing targets are rejected rather than overwritten.
 
 These are implementations of the [local-generator pattern supported by Nx](https://nx.dev/docs/kb/local-generators), not a reason to add another service or language module for every task.
 
