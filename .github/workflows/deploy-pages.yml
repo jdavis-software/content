@@ -45,7 +45,7 @@ jobs:
           python3 - <<'PY'
           import hashlib, os, pathlib, time, urllib.request
           base = 'https://jdavis-software.github.io/content/'
-          paths = ['articles/parallel-agent-engineering/', 'agent-flow.js', 'agent-flow-model.js', 'agent-flow.css', 'vendor/anime-4.5.0.esm.min.js']
+          paths = ['articles/parallel-agent-engineering/', 'agent-flow.js', 'agent-flow-model.js', 'agent-flow.css', 'devops-flow.js', 'devops-model.js', 'devops-flow.css', 'vendor/anime-4.5.0.esm.min.js']
           for attempt in range(8):
               try:
                   for route in paths:
@@ -54,7 +54,8 @@ jobs:
                           assert response.status == 200
                           data = response.read()
                       if route.endswith('/'):
-                          assert b'id="parallel-agent-flow"' in data, 'New diagram not served yet'
+                          assert b'id="parallel-agent-flow"' in data, 'Agent diagram not served yet'
+                          assert b'id="devops-invalidation"' in data, 'DevOps diagram not served yet'
                           assert b'DriftGate' not in data
                       else:
                           expected = pathlib.Path('site', route).read_bytes()
