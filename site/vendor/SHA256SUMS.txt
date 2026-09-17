@@ -1,0 +1,2 @@
+a19015a1a92d52025a2fb6703b6d67eadd1cc2aeaf880770e96e04cf6aa07be1  site/vendor/anime-4.5.0.esm.min.js
+3f3e835a9952cfc2a6ca836fb95b3257c981f24fa3ef51249055acb09931897b  site/vendor/ANIME-LICENSE.txt
