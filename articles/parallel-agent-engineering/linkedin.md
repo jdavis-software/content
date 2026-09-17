@@ -2,7 +2,7 @@ Fewer files are not always a simpler architecture—especially when several AI a
 
 That is changing how I structure software.
 
-In my DriftGate rebuild, I am combining smaller, cohesive files with TypeScript 7, Go, Nx, semantic code navigation, generated API contracts, and isolated Git worktrees.
+I am combining smaller, cohesive files with TypeScript 7, Go, Nx, semantic code navigation, generated API contracts, and isolated Git worktrees.
 
 The important part is how they fit together.
 

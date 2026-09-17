@@ -49,7 +49,7 @@ The deployment workflow is manual by design. Set up an independently enforced re
 
 ## Design and implementation
 
-The initial static generator is native Node ESM rather than Astro. This is the lightweight static alternative allowed in the plan: it can be built and tested offline with zero third-party dependencies. The supported Markdown subset is documented; executable MDX and plugins are deliberately excluded. A future Astro adapter can consume the same article packages without changing the source contract.
+The initial static generator is native Node ESM rather than Astro. This is the lightweight static alternative allowed in the plan: it can be built and tested offline without installing dependencies. The interactive agent-flow diagram uses a pinned, locally served Anime.js 4.5.0 browser bundle; no CDN or paid service is required. The supported Markdown subset is documented; executable MDX and plugins are deliberately excluded. A future Astro adapter can consume the same article packages without changing the source contract.
 
 Read [architecture](docs/ARCHITECTURE.md), [publishing](docs/PUBLISHING.md), [integrations](docs/INTEGRATIONS.md) and [test evidence](docs/TESTING.md).
 
@@ -58,3 +58,7 @@ Read [architecture](docs/ARCHITECTURE.md), [publishing](docs/PUBLISHING.md), [in
 Implemented: static site, local review workspace, content CLI, public-safe structural validation, per-unit fingerprints, integrity-checked page cache, dry-run publishing handoff, operator-attested receipt storage, six agent skills, pipeline definitions and tests.
 
 Not implied: a hosted MCP, an installed account-level plugin, verified Zapier authentication, autonomous writing without a host model, paid image generation, native LinkedIn articles/newsletters, or a measured speedup from parallel agents.
+
+## Animated architecture diagram
+
+The pilot has an interactive contract → worktrees → focused checks → integration → release diagram. It plays once on entering the viewport and supports pause, replay, timeline scrubbing, and stage selection. Reduced-motion users get immediate static stages; the full diagram remains visible without JavaScript. The engine loads only when the diagram is used or enters view, not on the homepage. See `docs/MOTION.md` for the local vendor pin and maintenance notes.
