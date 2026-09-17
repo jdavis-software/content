@@ -1,0 +1,83 @@
+[
+  {
+    "id": "S01",
+    "title": "TypeScript 7.0 announcement",
+    "url": "https://devblogs.microsoft.com/typescript/announcing-typescript-7-0/",
+    "supports": "Release date, native Go implementation, vendor full-build measurements, compiler API compatibility caveat.",
+    "publishedAt": "2026-07-08",
+    "checkedAt": "2026-09-17",
+    "type": "primary"
+  },
+  {
+    "id": "S02",
+    "title": "Nx affected tasks",
+    "url": "https://nx.dev/docs/features/ci-features/affected",
+    "supports": "Affected selection uses Git changes and the project graph.",
+    "publishedAt": null,
+    "checkedAt": "2026-09-17",
+    "type": "primary"
+  },
+  {
+    "id": "S03",
+    "title": "Nx task caching",
+    "url": "https://nx.dev/docs/features/cache-task-results",
+    "supports": "Cache reuse of matching task computations and their outputs.",
+    "publishedAt": null,
+    "checkedAt": "2026-09-17",
+    "type": "primary"
+  },
+  {
+    "id": "S04",
+    "title": "Nx inputs",
+    "url": "https://nx.dev/docs/reference/inputs",
+    "supports": "Input configuration determines computation hashes.",
+    "publishedAt": null,
+    "checkedAt": "2026-09-17",
+    "type": "primary"
+  },
+  {
+    "id": "S05",
+    "title": "Git worktree reference",
+    "url": "https://git-scm.com/docs/git-worktree",
+    "supports": "Separate worktrees and branches attached to a repository.",
+    "publishedAt": null,
+    "checkedAt": "2026-09-17",
+    "type": "primary"
+  },
+  {
+    "id": "S06",
+    "title": "Docker cache optimization",
+    "url": "https://docs.docker.com/build/cache/optimize/",
+    "supports": "Build contexts, layer order and dependency installation affect cache reuse.",
+    "publishedAt": null,
+    "checkedAt": "2026-09-17",
+    "type": "primary"
+  },
+  {
+    "id": "S07",
+    "title": "Node ESM reference",
+    "url": "https://nodejs.org/api/esm.html",
+    "supports": "Explicit module format selection and import/export conventions.",
+    "publishedAt": null,
+    "checkedAt": "2026-09-17",
+    "type": "primary"
+  },
+  {
+    "id": "S08",
+    "title": "Effective Go concurrency",
+    "url": "https://go.dev/doc/effective_go#concurrency",
+    "supports": "Goroutines and channels; distinction between concurrency and parallelism.",
+    "publishedAt": null,
+    "checkedAt": "2026-09-17",
+    "type": "primary"
+  },
+  {
+    "id": "S09",
+    "title": "tsx repository",
+    "url": "https://github.com/privatenumber/tsx",
+    "supports": "TypeScript execution; separate typechecking responsibility.",
+    "publishedAt": null,
+    "checkedAt": "2026-09-17",
+    "type": "primary"
+  }
+]

@@ -1,0 +1,12 @@
+flowchart TD
+    C["Agreed contracts"] --> A["Agent A - isolated worktree"]
+    C --> B["Agent B - isolated worktree"]
+    C --> D["Agent C - isolated worktree"]
+    A --> E["Focused validation"]
+    B --> F["Focused validation"]
+    D --> G["Focused validation"]
+    E --> H["Integration and review"]
+    F --> H
+    G --> H
+    H --> I["Build artifact"]
+    I --> J["Approve and promote"]

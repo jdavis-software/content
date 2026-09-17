@@ -1,0 +1,5 @@
+{
+  "cover": {"file":"cover.svg","method":"original-code-authored-vector","generatedByModel":false,"description":"Illustrative worktree and validation graph, not vendor branding or benchmark data."},
+  "gptImage": {"status":"not-run","reason":"The pilot uses an editable diagrammatic cover. A host-driven GPT Image brief is included for a later optional image pass."},
+  "animatedInfographic": {"status":"not-run","reason":"Specialist plugin remains an explicit optional production pass; no animation export is claimed."}
+}

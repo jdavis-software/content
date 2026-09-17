@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "title": "Parallel AI agents are changing how I architect software",
+  "description": "TypeScript, Go, Nx, ESM, and isolated Git worktrees are useful on their own. The bigger shift is designing the entire delivery system for parallel work.",
+  "slug": "parallel-agent-engineering",
+  "status": "review",
+  "publicSafe": true,
+  "author": "Jordan Davis",
+  "category": "Agentic engineering",
+  "createdAt": "2026-09-17",
+  "updatedAt": "2026-09-17",
+  "tags": ["Agentic AI", "TypeScript", "Go", "Nx", "DevOps"],
+  "coverImage": "assets/cover.svg",
+  "coverAlt": "Independent engineering workstreams converging at a shared validation gate",
+  "sourceType": "mixed",
+  "publishedUrl": null,
+  "featured": true
+}

@@ -1,0 +1,6 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "content-studio",
+  "version": "1.0.0",
+  "description": "Create evidence-backed technical articles, visual briefs, and LinkedIn drafts in a GitHub-first workflow. Review before publishing."
+}

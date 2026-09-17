@@ -1,0 +1,17 @@
+{
+  "name": "@jdavis-software/content-studio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "GitHub-first technical publishing with review gates and dependency-aware artifacts",
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "studio": "node scripts/content.mjs",
+    "dev": "node scripts/content.mjs serve --preview",
+    "build": "node scripts/content.mjs build",
+    "preview": "node scripts/content.mjs serve",
+    "validate": "node scripts/content.mjs validate",
+    "test": "node --test tests/*.test.mjs",
+    "check": "npm run validate && npm test && npm run build"
+  }
+}

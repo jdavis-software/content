@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "title": "Jordan Davis — Engineering Notes",
+  "author": "Jordan Davis",
+  "description": "Practical notes on software architecture, agentic engineering, and the systems that make development faster.",
+  "origin": "https://jdavis-software.github.io",
+  "basePath": "/content",
+  "repository": "https://github.com/jdavis-software/content",
+  "articleDirectory": "articles",
+  "maxAssetBytes": 5242880,
+  "maxLinkedInCharacters": 2800,
+  "paidGenerationEnabled": false
+}

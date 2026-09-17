@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="t d">
+<title id="t">Independent work. Shared confidence.</title><desc id="d">An illustrative engineering graph: three separate workstreams converge on a validation gate, then continue to one release.</desc>
+<defs><pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1" fill="#c8d3ce"/></pattern></defs>
+<rect width="1200" height="760" fill="#eef3ef"/><rect width="1200" height="760" fill="url(#grid)"/>
+<g fill="none" stroke="#a1b5ac" stroke-width="2"><path d="M185 380H300Q340 380 340 340V214Q340 176 382 176H610Q664 176 664 230V342Q664 380 710 380H810"/><path d="M185 380H810"/><path d="M185 380H300Q340 380 340 420V550Q340 584 382 584H610Q664 584 664 530V420Q664 380 710 380H810"/><path d="M868 380H1020"/></g>
+<g fill="#fff" stroke="#9bb6a8" stroke-width="2"><rect x="137" y="334" width="96" height="92" rx="14"/><rect x="410" y="130" width="136" height="92" rx="14"/><rect x="410" y="334" width="136" height="92" rx="14"/><rect x="410" y="538" width="136" height="92" rx="14"/><rect x="762" y="324" width="112" height="112" rx="22"/></g>
+<g fill="#17694b"><circle cx="478" cy="176" r="13"/><circle cx="478" cy="380" r="13"/><circle cx="478" cy="584" r="13"/><circle cx="1020" cy="380" r="25"/></g>
+<g fill="none" stroke="#17694b" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M163 372l-10 8 10 8m45-16 10 8-10 8m-17-21-10 42"/><path d="M790 380l19 19 39-41"/></g>
+<g font-family="system-ui,Arial,sans-serif" font-size="18" fill="#38594b" text-anchor="middle"><text x="185" y="467">CONTRACT</text><text x="478" y="264">WORKTREE A</text><text x="478" y="468">WORKTREE B</text><text x="478" y="672">WORKTREE C</text><text x="818" y="477">VALIDATE</text><text x="1020" y="444">RELEASE</text></g>
+<g fill="#183e2d" font-family="system-ui,Arial,sans-serif"><text x="52" y="63" font-size="20" font-weight="600">Independent work. Shared confidence.</text><text x="52" y="711" font-size="15">Illustrative architecture · not a performance benchmark</text></g>
+</svg>
