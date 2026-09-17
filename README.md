@@ -21,7 +21,7 @@ npm run studio -- prepare parallel-agent-engineering
 npm run studio -- status parallel-agent-engineering
 ```
 
-`npm run build` creates `dist/` with **published articles only**. The pilot is intentionally `review`, so production excludes its article route, assets, RSS and sitemap entry. `npm run studio -- build --preview` writes the review site into ignored `.studio/preview/`.
+`npm run build` creates `dist/` with **release-selected articles only** (the metadata status is named `published`). Revision 2 of the pilot is selected for the first production deployment, so its route, assets, RSS and sitemap entry are included. This is build inclusion, not evidence that GitHub Pages is live: `publishedUrl` remains null until the actual URL is verified. Draft/review packages still stay out of production. `npm run studio -- build --preview` writes the local review site into ignored `.studio/preview/`.
 
 ## The first article
 
@@ -43,7 +43,7 @@ Use the host's local plugin/skill installation flow for this repository. The por
 
 ## Deploy
 
-GitHub Pages uses `.github/workflows/deploy-pages.yml`. Select **Settings → Pages → Source: GitHub Actions** once, then run the **Deploy approved site** workflow. There is no automatic LinkedIn post and no draft site deployment. The candidate address is `https://jdavis-software.github.io/content/`; consider it live only after a successful deployment and URL check.
+GitHub Pages uses `.github/workflows/deploy-pages.yml`. Select **Settings → Pages → Source: GitHub Actions** once, then run the **Deploy approved site** workflow on `main`. No additional workflow template is needed. The approved pilot is already included in the production build. There is no automatic LinkedIn post and no draft site deployment. The candidate address is `https://jdavis-software.github.io/content/`; consider it live only after a successful deployment and URL check.
 
 The deployment workflow is manual by design. Set up an independently enforced review gate if agents will receive deployment permissions. An editable `status` field is not a security boundary.
 

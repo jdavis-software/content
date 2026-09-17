@@ -15,6 +15,8 @@ async function fixture(t) {
  const root=await mkdtemp(path.join(tmpdir(),'content-studio-'));
  t.after(()=>rm(root,{recursive:true,force:true}));
  for(const f of ['articles','site','lib','scripts','skills','plugin.json','package.json','studio.config.json'])await cp(path.join(source,f),path.join(root,f),{recursive:true});
+ // Keep synthetic fixture state independent of the real article's release lifecycle.
+ await modifyMeta(root,{status:'review',publishedUrl:null});
  return root;
 }
 const json=async f=>JSON.parse(await readFile(f,'utf8'));

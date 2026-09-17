@@ -3,7 +3,7 @@
   "title": "Parallel AI agents are changing how I architect software",
   "description": "Small files, semantic navigation, generated Go/TypeScript contracts, isolated worktrees, and warm caches: designing software delivery for parallel agents.",
   "slug": "parallel-agent-engineering",
-  "status": "review",
+  "status": "published",
   "publicSafe": true,
   "author": "Jordan Davis",
   "category": "Agentic engineering",
