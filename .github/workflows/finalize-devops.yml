@@ -27,6 +27,11 @@ jobs:
                   text = text[:start] + replacement + text[end:]
               assert hashlib.sha256(text.encode()).hexdigest() == op['after'], 'Prepared output mismatch: ' + str(p)
               p.write_text(text)
+          p = pathlib.Path('lib/devops-flow.mjs')
+          data = p.read_bytes()
+          assert hashlib.sha1(b'blob ' + str(len(data)).encode() + b'\0' + data).hexdigest() == 'd743b922159df7ec0e06339b268c0ba89d7ec64f'
+          assert data.count(b'Reuse the work.<br>') == 1
+          p.write_bytes(data.replace(b'Reuse the work.<br>', b'Reuse the work. <br>'))
           expected = {'docs/DEVOPS-DIAGRAM.md':'17041f0ab90dec9ff2b271ba107a6e541ec4ce97d84fad2932039da1bcf10ba7','lib/devops-flow.mjs':'963765f1870409080049b25e53726e5dce6f937b120882d0a23e7fa006608dc5','site/devops-flow.css':'a0de67d6a7d39d04b1f834826657628042f644df4dccddc74ae437c25c07223e','site/devops-flow.js':'a62ac2864d52ebfe41a5bba806b1910faf2b673318ccc2315a21426ff1898d3a','site/devops-model.js':'256a6c3bdf09deaa14bac0d5029dc22d43da9465e1940e3052a69a46f57b0468','tests/devops.test.mjs':'4eee81c849d617531764a28e235c96cf3d44cd3c7046a82dce4bcdc3e84d6ebe'}
           for file, digest in expected.items():
               assert hashlib.sha256(pathlib.Path(file).read_bytes()).hexdigest() == digest, 'Source differs from local test: ' + file
@@ -35,7 +40,7 @@ jobs:
       - name: Remove temporary helpers and commit to the isolated feature branch
         run: |
           git rm .github/workflows/prepare-devops.yml .github/workflows/finalize-devops.yml
-          git add lib/content.mjs lib/site.mjs .github/workflows/deploy-pages.yml
+          git add lib/content.mjs lib/site.mjs lib/devops-flow.mjs .github/workflows/deploy-pages.yml
           test "$(git write-tree)" = cee122f391e19b277b0f5f0cbbd5adfb45900517
           git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'feat: integrate tested interactive DevOps and cache model'
           git push origin HEAD:feature/interactive-devops
