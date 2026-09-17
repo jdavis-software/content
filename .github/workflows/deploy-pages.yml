@@ -12,7 +12,8 @@ concurrency:
   cancel-in-progress: false
 jobs:
   build:
-    if: ${{ github.event_name == 'workflow_dispatch' || github.event.head_commit.message == 'release: publish the approved interactive agent-flow diagram' }}
+    if: >-
+      ${{ github.event_name == 'workflow_dispatch' || github.event.head_commit.message == 'release: publish the approved interactive agent-flow diagram' }}
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
