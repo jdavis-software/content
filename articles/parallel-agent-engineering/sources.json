@@ -3,7 +3,7 @@
     "id": "S01",
     "title": "TypeScript 7.0 announcement",
     "url": "https://devblogs.microsoft.com/typescript/announcing-typescript-7-0/",
-    "supports": "Release date, native Go implementation, vendor full-build measurements, compiler API compatibility caveat.",
+    "supports": "Native Go implementation, language-service capabilities, and explicitly attributed full-build benchmark range.",
     "publishedAt": "2026-07-08",
     "checkedAt": "2026-09-17",
     "type": "primary"
@@ -12,7 +12,7 @@
     "id": "S02",
     "title": "Nx affected tasks",
     "url": "https://nx.dev/docs/features/ci-features/affected",
-    "supports": "Affected selection uses Git changes and the project graph.",
+    "supports": "Affected-project selection from Git changes and the project graph.",
     "publishedAt": null,
     "checkedAt": "2026-09-17",
     "type": "primary"
@@ -21,16 +21,16 @@
     "id": "S03",
     "title": "Nx task caching",
     "url": "https://nx.dev/docs/features/cache-task-results",
-    "supports": "Cache reuse of matching task computations and their outputs.",
+    "supports": "Reuse of completed task computations and outputs when the relevant inputs match.",
     "publishedAt": null,
     "checkedAt": "2026-09-17",
     "type": "primary"
   },
   {
     "id": "S04",
-    "title": "Nx inputs",
+    "title": "Nx inputs and named inputs",
     "url": "https://nx.dev/docs/reference/inputs",
-    "supports": "Input configuration determines computation hashes.",
+    "supports": "Real task inputs, generated dependent-task output files, and cache correctness.",
     "publishedAt": null,
     "checkedAt": "2026-09-17",
     "type": "primary"
@@ -39,7 +39,7 @@
     "id": "S05",
     "title": "Git worktree reference",
     "url": "https://git-scm.com/docs/git-worktree",
-    "supports": "Separate worktrees and branches attached to a repository.",
+    "supports": "Separate working directories and branches attached to one repository.",
     "publishedAt": null,
     "checkedAt": "2026-09-17",
     "type": "primary"
@@ -48,7 +48,7 @@
     "id": "S06",
     "title": "Docker cache optimization",
     "url": "https://docs.docker.com/build/cache/optimize/",
-    "supports": "Build contexts, layer order and dependency installation affect cache reuse.",
+    "supports": "Stable dependency layers, persistent cache mounts, and tool-specific sharing/locking requirements.",
     "publishedAt": null,
     "checkedAt": "2026-09-17",
     "type": "primary"
@@ -57,25 +57,151 @@
     "id": "S07",
     "title": "Node ESM reference",
     "url": "https://nodejs.org/api/esm.html",
-    "supports": "Explicit module format selection and import/export conventions.",
+    "supports": "Explicit module format and import/export conventions; interoperability is not eliminated.",
     "publishedAt": null,
     "checkedAt": "2026-09-17",
     "type": "primary"
   },
   {
     "id": "S08",
-    "title": "Effective Go concurrency",
-    "url": "https://go.dev/doc/effective_go#concurrency",
-    "supports": "Goroutines and channels; distinction between concurrency and parallelism.",
+    "title": "Gopls feature index",
+    "url": "https://go.dev/gopls/features/",
+    "supports": "Definition, reference, implementation, and type-oriented source navigation.",
     "publishedAt": null,
     "checkedAt": "2026-09-17",
     "type": "primary"
   },
   {
     "id": "S09",
-    "title": "tsx repository",
-    "url": "https://github.com/privatenumber/tsx",
-    "supports": "TypeScript execution; separate typechecking responsibility.",
+    "title": "tsx and TypeScript checking",
+    "url": "https://tsx.hirok.io/typescript",
+    "supports": "Executing TypeScript with tsx is separate from dedicated typechecking.",
+    "publishedAt": null,
+    "checkedAt": "2026-09-17",
+    "type": "primary"
+  },
+  {
+    "id": "S10",
+    "title": "Nx project and task graphs",
+    "url": "https://nx.dev/docs/features/explore-graph",
+    "supports": "Distinct project and task graph responsibilities.",
+    "publishedAt": null,
+    "checkedAt": "2026-09-17",
+    "type": "primary"
+  },
+  {
+    "id": "S11",
+    "title": "Nx TypeScript 7 compatibility",
+    "url": "https://nx.dev/docs/kb/typescript-7",
+    "supports": "Native TypeScript 7 compilation alongside scoped TypeScript 6 compiler-API tooling.",
+    "publishedAt": null,
+    "checkedAt": "2026-09-17",
+    "type": "primary"
+  },
+  {
+    "id": "S12",
+    "title": "Nx local generators",
+    "url": "https://nx.dev/docs/kb/local-generators",
+    "supports": "Workspace-owned generators for repeatable scaffolding; project-specific behavior remains separately qualified.",
+    "publishedAt": null,
+    "checkedAt": "2026-09-17",
+    "type": "primary"
+  },
+  {
+    "id": "S13",
+    "title": "Oxlint type-aware linting",
+    "url": "https://oxc.rs/docs/guide/usage/linter/type-aware",
+    "supports": "Type-aware lint rules and the tsgolint integration, including floating-promise detection.",
+    "publishedAt": null,
+    "checkedAt": "2026-09-17",
+    "type": "primary"
+  },
+  {
+    "id": "S14",
+    "title": "Oxfmt documentation",
+    "url": "https://oxc.rs/docs/guide/usage/formatter",
+    "supports": "Formatting responsibility in the native JavaScript/TypeScript toolchain.",
+    "publishedAt": null,
+    "checkedAt": "2026-09-17",
+    "type": "primary"
+  },
+  {
+    "id": "S15",
+    "title": "oapi-codegen project",
+    "url": "https://github.com/oapi-codegen/oapi-codegen",
+    "supports": "Generation of Go client/server wire artifacts from OpenAPI.",
+    "publishedAt": null,
+    "checkedAt": "2026-09-17",
+    "type": "primary"
+  },
+  {
+    "id": "S16",
+    "title": "Hey API Valibot plugin",
+    "url": "https://heyapi.dev/docs/openapi/typescript/plugins/valibot",
+    "supports": "Generating Valibot schemas from OpenAPI and explicitly enabling SDK validation.",
+    "publishedAt": null,
+    "checkedAt": "2026-09-17",
+    "type": "primary"
+  },
+  {
+    "id": "S17",
+    "title": "sqlc documentation",
+    "url": "https://docs.sqlc.dev/en/latest/",
+    "supports": "Generating typed query code from SQL.",
+    "publishedAt": null,
+    "checkedAt": "2026-09-17",
+    "type": "primary"
+  },
+  {
+    "id": "S18",
+    "title": "sqlc transactions",
+    "url": "https://docs.sqlc.dev/en/latest/howto/transactions.html",
+    "supports": "WithTx binds generated queries to an existing transaction.",
+    "publishedAt": null,
+    "checkedAt": "2026-09-17",
+    "type": "primary"
+  },
+  {
+    "id": "S19",
+    "title": "tern migration tool",
+    "url": "https://github.com/jackc/tern",
+    "supports": "SQL migration tooling in the selected persistence stack.",
+    "publishedAt": null,
+    "checkedAt": "2026-09-17",
+    "type": "primary"
+  },
+  {
+    "id": "S20",
+    "title": "pgx driver documentation",
+    "url": "https://pkg.go.dev/github.com/jackc/pgx/v5",
+    "supports": "Go PostgreSQL access and transaction primitives.",
+    "publishedAt": null,
+    "checkedAt": "2026-09-17",
+    "type": "primary"
+  },
+  {
+    "id": "S21",
+    "title": "PostgreSQL transaction isolation",
+    "url": "https://www.postgresql.org/docs/current/transaction-iso.html",
+    "supports": "Database concurrency/isolation semantics remain relevant across application module boundaries.",
+    "publishedAt": null,
+    "checkedAt": "2026-09-17",
+    "type": "primary"
+  },
+  {
+    "id": "S22",
+    "title": "Temporal Go Workflow contract",
+    "url": "https://pkg.go.dev/go.temporal.io/sdk/workflow",
+    "supports": "Deterministic Workflow restrictions and delegation of external effects to Activities.",
+    "publishedAt": null,
+    "checkedAt": "2026-09-17",
+    "type": "primary"
+  },
+  {
+    "id": "S23",
+    "title": "Docker Compose Watch",
+    "url": "https://docs.docker.com/compose/how-tos/file-watch/",
+    "supports": "Separate synchronization, sync/restart, and image rebuild responses to file changes.",
     "publishedAt": null,
     "checkedAt": "2026-09-17",
     "type": "primary"

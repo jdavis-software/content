@@ -1,20 +1,22 @@
-Adding more AI agents does not fix a repository that was never designed for parallel work.
+Fewer files are not always a simpler architecture—especially when several AI agents need to work at once.
 
-That is changing how I architect software.
+That is changing how I structure software.
 
-I am combining TypeScript, Go, Nx, ESM, and isolated Git worktrees with a more granular approach to tasks: explicit ownership, agreed contracts, focused validation, and a clear integration path.
+In my DriftGate rebuild, I am combining smaller, cohesive files with TypeScript 7, Go, Nx, semantic code navigation, generated API contracts, and isolated Git worktrees.
 
-The interesting part is what happens beyond code generation.
+The important part is how they fit together.
 
-A small identity change should not unnecessarily rebuild billing. A shared-contract change should trigger every relevant consumer check. A change to a LinkedIn hook should not regenerate an unrelated image.
+An agent gets a bounded task and the relevant context. Generated contracts reduce interface guesswork. Repeatable scaffolding establishes conventions. Focused checks validate the change. Private build outputs prevent workers from overwriting each other.
 
-The goal is not to avoid cache invalidation. It is to invalidate the work that actually changed.
+Then the same boundaries carry into DevOps: reuse compatible dependencies and completed artifacts, keep mutable test state isolated, and invalidate only the work that actually changed.
 
-There are limits: worktrees do not isolate databases, dependency graphs do not capture every runtime relationship, and compiler parallelism can compete with agent parallelism for the same hardware.
+Small files alone do not produce smaller rebuilds. Real dependency edges, generated inputs, tool versions, and output ownership determine that.
 
-I wrote about the architecture, the DevOps implications, and the tradeoffs—not a claimed “30 agents = 30x” speedup.
+I am not trying to make repositories harder for people to understand. I am moving away from the assumption that one person—or one agent—will hold the entire system in their head.
 
-Read the full article:
+The goal is less rediscovery, fewer collisions, and a shorter path from a task to a working, integrated change.
+
+I wrote about the architecture and its tradeoffs:
 {{articleUrl}}
 
 #SoftwareEngineering #AgenticAI #TypeScript #DevOps
