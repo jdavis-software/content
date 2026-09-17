@@ -1,19 +1,33 @@
-name: Prepare social card source
+name: Import approved social image
 on:
   push:
     branches: [feature/social-preview-card]
     paths: ['.github/workflows/prepare-social-card.yml']
 permissions:
-  contents: read
+  contents: write
 jobs:
-  snapshot:
+  import-image:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
-      - run: git archive --format=zip HEAD -o /tmp/social-card-source.zip
-      - uses: actions/upload-artifact@v4
-        with:
-          name: social-card-source
-          path: /tmp/social-card-source.zip
-          retention-days: 2
+      - name: Fetch only the approved public image and verify its bytes
+        run: |
+          python3 - <<'PY'
+          import hashlib, pathlib, struct, urllib.request
+          url = 'https://v3b.fal.media/files/b/0aaad977/RAcP42UT3qB3FrmVW0r-g_oxNOmzcQ%253D'
+          with urllib.request.urlopen(url, timeout=30) as response:
+              data = response.read(1048577)
+          assert len(data) == 725848, 'Unexpected image size'
+          assert hashlib.sha256(data).hexdigest() == '45869bd494411d7c05298b3e1f106e0010711277a037b70b56c3e48184453156', 'Image integrity mismatch'
+          assert data[:8] == b'\x89PNG\r\n\x1a\n'
+          assert struct.unpack('>II', data[16:24]) == (1200, 627), 'Wrong image dimensions'
+          dest = pathlib.Path('articles/parallel-agent-engineering/assets/og-linkedin-v1.png')
+          assert not dest.exists(), 'Do not overwrite an existing image'
+          dest.write_bytes(data)
+          PY
+      - name: Commit image only to the isolated feature branch
+        run: |
+          git add articles/parallel-agent-engineering/assets/og-linkedin-v1.png
+          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'assets: add approved 1200x627 generated social card'
+          git push origin HEAD:feature/social-preview-card
