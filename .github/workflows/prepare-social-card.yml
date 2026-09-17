@@ -1,0 +1,19 @@
+name: Prepare social card source
+on:
+  push:
+    branches: [feature/social-preview-card]
+    paths: ['.github/workflows/prepare-social-card.yml']
+permissions:
+  contents: read
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - run: git archive --format=zip HEAD -o /tmp/social-card-source.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: social-card-source
+          path: /tmp/social-card-source.zip
+          retention-days: 2
