@@ -1,0 +1,34 @@
+name: Import article two image
+on:
+  push:
+    branches: [article/keeping-parallel-development-fast]
+    paths: [.github/workflows/import-article-two-image.yml]
+permissions:
+  contents: write
+jobs:
+  image:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Import and verify the publication artwork
+        run: |
+          python3 - <<'PY'
+          import hashlib, pathlib, struct, urllib.request
+          url = 'https://d2ol7oe51mr4n9.cloudfront.net/user_3GItM2y2AvmPfI5GF1fDy6mhorh/c2cf575d-e42e-462f-8fe3-8da1d155432c.png'
+          with urllib.request.urlopen(url, timeout=30) as response:
+              data = response.read(5242881)
+          assert len(data) < 5242880
+          assert hashlib.sha256(data).hexdigest() == '519ffa6191cfa134e57613e40cd08dd746f34dab732a67cfeaa17aa9f973e680'
+          assert data[:8] == b'\x89PNG\r\n\x1a\n'
+          assert struct.unpack('>II', data[16:24]) == (1734, 907)
+          dest = pathlib.Path('articles/keeping-parallel-development-fast/assets/og-cache-delivery-v1.png')
+          dest.parent.mkdir(parents=True, exist_ok=True)
+          dest.write_bytes(data)
+          print('Verified article-two artwork:', len(data), 'bytes')
+          PY
+      - name: Commit only the artwork to its isolated branch
+        run: |
+          git add articles/keeping-parallel-development-fast/assets/og-cache-delivery-v1.png
+          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'assets: add verified raster cover for cache and delivery article'
+          git push origin HEAD:article/keeping-parallel-development-fast
