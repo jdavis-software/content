@@ -1,0 +1,94 @@
+name: Verify database roles clarification
+on:
+  push:
+    branches: [article/database-roles-clarification]
+    paths: [.github/workflows/clarify-database-roles.yml]
+permissions:
+  contents: write
+jobs:
+  article:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Apply the scoped article clarification
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          root = Path('articles/keeping-parallel-development-fast')
+          p = root / 'article.md'
+          old = '''I keep application PostgreSQL, Temporal persistence, and any derived search index visually and operationally distinct. They may use similar storage technology, but their ownership and recovery procedures are different.
+
+          An optional lexical or vector index can be rebuilt from its own canonical inputs when its contract permits. It is not a reason to add another database to every development environment, and it is not a substitute for workflow history or application records.'''
+          new = '''## Not every database is another source of truth
+
+          The supporting stores need explicit roles, not just a collection of database logos beside PostgreSQL. My intended split is application state, workflow state, and an optional knowledge index. Those are different ownership and recovery boundaries—even when two of them use the same database engine.
+
+          | Store | Role | What changes or restores it |
+          | --- | --- | --- |
+          | Application PostgreSQL | Authoritative application records and business invariants | Application transactions, controlled migrations, and database recovery |
+          | Temporal-owned PostgreSQL persistence | Durable workflow execution state and history owned by the Temporal Service | Service-managed writes, supported schema upgrades, retention, and recovery procedures |
+          | Optional SQLite FTS index | A derived local search index of approved knowledge documents | Reindex from the relevant document revision and index configuration |
+          | Build caches | Reusable results of declared computations | Recompute or restore when the relevant key changes or the result is unavailable |
+
+          **Application PostgreSQL stays the source of truth for application data.** A managed PostgreSQL service changes how I operate it, not which component owns those records. I do not replace that authority with a search result or a cached context pack.
+
+          **Temporal owns its persistence separately.** In the PostgreSQL-backed deployment I am planning, it has distinct databases and credentials, including the required default and visibility stores. Sharing a server instance is a resource-sizing decision, not permission to share application tables or migration ownership. Workers talk to the Temporal Service; Activities can separately access application PostgreSQL through the application's adapters. Temporal persistence is not a replica derived from application rows. [Temporal persistence responsibilities](https://docs.temporal.io/temporal-service/persistence).
+
+          **SQLite FTS is an optional developer-knowledge index, not another application database.** I would first use the versioned document manifest, direct file reads, and existing exact-text search. If repeated lookup friction warrants an index, SQLite's FTS5 module provides local full-text search over the selected documents. That is lexical retrieval; it does not itself make the database a semantic vector store. [SQLite FTS5](https://www.sqlite.org/fts5.html).
+
+          The source path is **approved documents → a versioned knowledge package → an optional SQLite index**. It is not automatically application PostgreSQL → SQLite. I would key that index to the document revision and relevant parser, tokenizer, and index-schema versions, and retain enough provenance to rebuild it. A source change outside that document set should not automatically rebuild the knowledge index.
+
+          That makes invalidation concrete. A revised architecture document can require reindexing without migrating application PostgreSQL. A SQL migration can require application compatibility checks without resetting Temporal history. A cold build cache should reset neither durable store. Changes to access permissions or document deletion must also reach retrieval: a rebuildable index is not permission to keep serving revoked material.
+
+          Embeddings or a hosted retrieval service would be a separate, measured addition, with explicit source and model/version boundaries—not an already-deployed requirement. The SQLite index is optional too. None of these choices implies adding a general cache, analytics database, or hosted vector database to every environment.
+
+          **Rebuild derived knowledge from its sources. Recover durable state through its owner's procedures. Never confuse either with clearing a build cache.**'''
+          text = p.read_text()
+          assert text.count(old) == 1, 'Article changed; reconcile before replacing'
+          p.write_text(text.replace(old, new))
+          sources_file = root / 'sources.json'
+          sources = json.loads(sources_file.read_text())
+          assert len(sources) == 19 and all(s['id'] != 'S20' for s in sources)
+          sources.append({'id':'S20','title':'SQLite FTS5 full-text search','url':'https://www.sqlite.org/fts5.html','supports':'Optional local full-text indexing of selected documents; lexical queries and rebuild from retained content, not automatic vector search or application authority.','checkedAt':'2026-09-17','type':'primary'})
+          sources_file.write_text(json.dumps(sources, indent=2) + '\n')
+          ledger = root / 'sources.md'
+          ledger_text = ledger.read_text()
+          marker = '\n\nChecked September 17, 2026.'
+          assert ledger_text.count(marker) == 1
+          entry = '\n- [SQLite FTS5 full-text search](https://www.sqlite.org/fts5.html) — Optional local full-text indexing of selected documents; lexical queries and rebuild from retained content, not automatic vector search or application authority.'
+          ledger.write_text(ledger_text.replace(marker, entry + marker))
+          test_file = Path('tests/series.test.mjs')
+          tests = test_file.read_text()
+          assert tests.count('assert.equal(pkg.sources.length,19);') == 1
+          tests = tests.replace('assert.equal(pkg.sources.length,19);', 'assert.equal(pkg.sources.length,20);')
+          tests += '''\n\ntest('database roles distinguish durable ownership from optional document-derived indexing',async t=>{
+            const dir=await fixture(t);await build(dir);
+            const body=await html(dir,second);
+            assert.match(body,/id="not-every-database-is-another-source-of-truth"/);
+            for(const label of ['Application PostgreSQL','Temporal-owned PostgreSQL persistence','Optional SQLite FTS index','Build caches'])assert.ok(body.includes(label));
+            assert.ok(body.includes('approved documents → a versioned knowledge package → an optional SQLite index'));
+            assert.ok(body.includes('Temporal persistence is not a replica derived from application rows'));
+            assert.ok(body.includes('The SQLite index is optional too'));
+            assert.ok(body.includes('https://www.sqlite.org/fts5.html'));
+            assert.ok(body.indexOf('id="not-every-database-is-another-source-of-truth"')<body.indexOf('id="application-data-invalidation-is-a-different-problem"'));
+          });\n'''
+          test_file.write_text(tests)
+          print('Updated the article, public source ledger, and focused regression test only.')
+          PY
+      - run: npm run check
+      - name: Save tested revision and source for rendered review
+        run: |
+          git add articles/keeping-parallel-development-fast/article.md articles/keeping-parallel-development-fast/sources.json articles/keeping-parallel-development-fast/sources.md tests/series.test.mjs
+          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'docs: distinguish application state, Temporal persistence, and optional SQLite knowledge index'
+          git push origin HEAD:article/database-roles-clarification
+          git archive --format=zip HEAD -o /tmp/database-roles-source.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: database-roles-source
+          path: /tmp/database-roles-source.zip
+          retention-days: 2
