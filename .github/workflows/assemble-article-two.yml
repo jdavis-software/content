@@ -1,0 +1,49 @@
+name: Assemble and verify article two
+on:
+  push:
+    branches: [article/keeping-parallel-development-fast]
+    paths: [.github/workflows/assemble-article-two.yml]
+permissions:
+  contents: write
+jobs:
+  assemble:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Apply exact locally tested edits and verify source identity
+        run: |
+          python3 - <<'PY'
+          import hashlib, json, pathlib
+          ops=json.loads(r'''[{"path":"README.md","before":"481463799522593922a4be059f300f26ec40e3ec359f93b0007d80b8ba15e2f7","edits":[[1910,1910,".\n\n## Engineering series\n\n1. [Parallel AI agents are changing how I architect software](https://jdavis-software.github.io/content/articles/parallel-agent-engineering/)\n2. [Keeping Parallel Development Fast: Docker, Warm Caches, PostgreSQL, and Precise Invalidation](https://jdavis-software.github.io/content/articles/keeping-parallel-development-fast/)\n\nThe second installment reuses the DevOps explorer and adds a [small Go cache probe](examples/go-cache/README.md). The probe is optional; the site build still requires only Node. See [article-two verification](docs/ARTICLE-TWO.md)"]],"after":"2f22ebdf9268067d80530c36f27e64acc5b73b7ed7e7abbeb9d1b3b860296004"},{"path":"schemas/metadata.schema.json","before":"9ddf7f3824782d816ca5ee9e93a52c18e784d16e37cc9d605305c62a01af63bb","edits":[[2444,2444,",\n    \"coverCaption\": {\n      \"type\": \"string\"\n    },\n    \"seriesOrder\": {\n      \"type\": \"integer\",\n      \"minimum\": 1\n    }"]],"after":"6005a2b146de92213f88fd985587074b71a4dd531e32f30a4c273905b5f7d583"},{"path":"lib/site.mjs","before":"07b6f2ed6b9a36d31e13f2b5260a86ee97f05d6d63441cf0f42ad9d89fb6fea2","edits":[[2696,2696,"<link rel=\"stylesheet\" href=\"${base}/devops-flow.css\"><script type=\"module\" src=\"${base}/devops-flow.js\"></script>` : ''}${article?.slug === 'keeping-parallel-development-fast' ? `"],[8290,8290,"if(p.slug==='keeping-parallel-development-fast') {\n    const anchor='<h2 id=\"docker-has-two-different-cache-mechanisms\">';\n    rendered.html=insertDevops(rendered.html,anchor);\n    const at=rendered.toc.findIndex(h=>h.id==='docker-has-two-different-cache-mechanisms');\n    rendered.toc.splice(at,0,{id:'devops-title',text:'Interactive: follow the change'});\n  }\n  "],[9165,9165,"${p.meta.coverWidth||"],[9169,9169,"}"],[9179,9179,"${p.meta.coverHeight||"],[9182,9182,"}"],[9196,9196,"${e(p.meta.coverCaption||\""],[9269,9269,"\")}"],[13933,13933,"||(b.meta.seriesOrder||0)-(a.meta.seriesOrder||0)"],[17708,17708,"if (visible.some(p => p.slug === 'keeping-parallel-development-fast') && !visible.some(p => p.slug === 'parallel-agent-engineering')) {\n    for (const file of ['devops-flow.css','devops-flow.js','devops-model.js'])\n      await put(file,await readFile(path.join(root,'site',file)));\n  }\n  "]],"after":"b32b8fbe6c90510d6c5678cbb41970ab43e1972acae425a5ffd00984a39acdda"},{"path":"lib/content.mjs","before":"5060ac2e03661fe98717faad219f3066304440cc05b880695d892818a1373674","edits":[[4464,4464,"const prose=pkg.article.replace(/^```[^\\n]*\\n[\\s\\S]*?^```[^\\n]*(?:\\n|$)/gm,'');\n  "],[4480,4484,""],[4485,4489,"os"]],"after":"e2b9d87292ea1cce2ee1d78d710dc297587d121375485ae387c6ebb4d5a5714f"},{"path":"lib/devops-flow.mjs","before":"963765f1870409080049b25e53726e5dce6f937b120882d0a23e7fa006608dc5","edits":[[6046,6046,", anchor=DEVOPS_ANCHOR"],[6071,6084,"anchor"],[6190,6203,"anchor"],[6217,6230,"anchor"]],"after":"ed18112b82c72b860bf74d9cbb8758c6df94d2dec9caefdbcd5b48a235322f48"},{"path":"site/style.css","before":"a6500b90ea7137bc59194da8242d58c7cd9f4152e9d7961330e49d0570aa8027","edits":[[17669,17669,"\n/* Preserve complete editorial covers at every viewport; do not crop social-card text. */\n.article-cover img{height:auto;max-height:none;min-height:0;object-fit:contain}\n"]],"after":"2f13073cf069237873f9096f251a407236f66d025b52eda28c7322f5a5751252"},{"path":"tests/studio.test.mjs","before":"92d85008bb6557878c2ef59f7a4005ee14205e71444813e848d4536cacd9fb54","edits":[[1067,1067,"e:true});\n for(const entry of await readdir(path.join(root,'articles')))if(entry!==slug)await rm(path.join(root,'articles',entry),{recursive:true,forc"]],"after":"2679efd595af9502610cc30f348e4be7874542fc3f88639e83c3bd63c06d9440"},{"path":"tests/social-image.test.mjs","before":"776df7f876bbb79571afa4185cc647d2f424ad75f76f1fa42dc28908ea5a0c74","edits":[[79,79,"readdir,"],[950,950," for(const entry of await readdir(path.join(dir,'articles')))if(entry!==slug)await rm(path.join(dir,'articles',entry),{recursive:true,force:true});\n "]],"after":"79a4dc70280e51aff3f5284b0443a4380fbaeb9cba9fed5d839a474f5df1c1e8"},{"path":"tests/agent-flow.test.mjs","before":"db96ec09bed27c4ca8a70086e8037b3337696ed93241bb095fc66307aa0ae7b9","edits":[[79,79,"readdir,"],[933,933,"e:true});\n  for(const entry of await readdir(path.join(out,'articles')))if(entry!==slug)await rm(path.join(out,'articles',entry),{recursive:true,forc"]],"after":"9a1b64198a2f4605f5252b63b51f3655b540d7660d89c10ff3f4154ce4d652b1"},{"path":"tests/devops.test.mjs","before":"4eee81c849d617531764a28e235c96cf3d44cd3c7046a82dce4bcdc3e84d6ebe","edits":[[79,79,"readdir,"],[857,857,"for(const entry of await readdir(path.join(dir,'articles')))if(entry!==slug)await rm(path.join(dir,'articles',entry),{recursive:true,force:true});\n  "]],"after":"cbd2551160b05004cf1d4fe27bf76f93e73ace41a982fbf7c68a04a16bc323b5"}]''')
+          for op in ops:
+              p=pathlib.Path(op['path'])
+              assert hashlib.sha256(p.read_bytes()).hexdigest()==op['before'], 'Base changed: '+str(p)
+              text=p.read_text()
+              for start,end,replacement in reversed(op['edits']):
+                  text=text[:start]+replacement+text[end:]
+              assert hashlib.sha256(text.encode()).hexdigest()==op['after'], 'Unexpected output: '+str(p)
+              p.write_text(text)
+          article=pathlib.Path('articles/keeping-parallel-development-fast')
+          for rel in ['metadata.json','sources.json','assets/provenance.json']:
+              p=article/rel
+              p.write_text(json.dumps(json.loads(p.read_text()),indent=2)+'\n')
+          ledger=json.loads((article/'sources.json').read_text())
+          text='# Public source ledger\n\n'+'\n'.join(f'- [{s["title"]}]({s["url"]}) — {s["supports"]}' for s in ledger)+'\n\nChecked September 17, 2026. Source documentation supports mechanisms, not personal performance claims. The Dockerfile is an illustrative fragment; Docker/PostgreSQL/Temporal integration tests were not executed for this article. The separately supplied Go probe was executed locally and does not measure delivery speed. No private project or customer material is included.\n'
+          (article/'sources.md').write_text(text)
+          expected=json.loads('''{"articles/keeping-parallel-development-fast/sources.md":"3ddfd9db8aefa88c99276f4dba0aef6219c468eb27c8945ee515d0d089b2966e","articles/keeping-parallel-development-fast/linkedin.md":"803570a048ee07713aeaa44ea3f4c7734de64864ad5dc618707fe363a8054494","articles/keeping-parallel-development-fast/article.md":"5e4f8644324cc8d99245cb82b1dd2cfaa6cda0b30a5af1c681531c6c6b7b8d7e","articles/keeping-parallel-development-fast/sources.json":"ac0ba03112ec4e6752504d3cbce5fba781aa0261a4b8ee671bf34dc3c48025b1","articles/keeping-parallel-development-fast/metadata.json":"66637f917c71f9ccb6209b7ae5417142df12f563fecc8967183b738f7eb78a88","articles/keeping-parallel-development-fast/assets/provenance.json":"bf192593cde99ae62bc986d8c008c5894d61d075de207c50b1cab7010198cf7e","examples/go-cache/cache_test.go":"6a92bf36aed8fe9e8fc27fe2486a75ea8323d86401cd600f880fbf50a779eaaf","examples/go-cache/cache.go":"4755d136b4f23132b2c5f2f32665bc07f8fc55daace18e5fcba5e9cecd534787","examples/go-cache/verify.mjs":"abfcb44086b1ea281058a6af72326754f8c9f7876390573b573e2174376c2f28","examples/go-cache/README.md":"0756a05cfa60a623c51a31b685495f938db0b76a54658efe47a61717ee49a6b7","examples/go-cache/go.mod":"637cf0d04fdaf371ead543f2b7957b96d493d8448dd26521a4e49ebf62b0d232","tests/series.test.mjs":"ba3bb086251fbae9a8d330d6c620969aabb560c4030b2ede1cfa14d4753bf78e","docs/ARTICLE-TWO.md":"56f3e68abb6fcbbf6992e547b101e1295f71c1dacb1cca87eb98f1530b4a66ce"}''')
+          for name,digest in expected.items():
+              assert hashlib.sha256(pathlib.Path(name).read_bytes()).hexdigest()==digest, 'Source differs from local test: '+name
+          print('All source files match the locally tested article revision')
+          PY
+      - run: npm run check
+      - name: Exercise optional Go cache semantics probe
+        run: node examples/go-cache/verify.mjs
+      - name: Commit only the tested article and integration
+        run: |
+          git add README.md schemas/metadata.schema.json lib/site.mjs lib/content.mjs lib/devops-flow.mjs site/style.css tests articles/keeping-parallel-development-fast docs/ARTICLE-TWO.md examples/go-cache
+          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'feat: assemble verified cache and delivery article with reusable explorer'
+          git push origin HEAD:article/keeping-parallel-development-fast

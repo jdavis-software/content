@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "title": "Keeping Parallel Development Fast: Docker, Warm Caches, PostgreSQL, and Precise Invalidation",
+  "description": "A practical guide to warm caches, precise rebuilds, isolated PostgreSQL tests, and Temporal state boundaries—without confusing cache hits with correctness.",
+  "slug": "keeping-parallel-development-fast",
+  "status": "published",
+  "publicSafe": true,
+  "author": "Jordan Davis",
+  "category": "DevOps & delivery",
+  "createdAt": "2026-09-17",
+  "updatedAt": "2026-09-17",
+  "tags": ["Agentic AI", "DevOps", "Docker", "Go", "Nx", "PostgreSQL", "Temporal"],
+  "coverImage": "assets/og-cache-delivery-v1.png",
+  "coverAlt": "Keeping Parallel Development Fast: code changes flow through a dependency graph into selected builds, reusable caches, and deployment.",
+  "coverWidth": 1734,
+  "coverHeight": 907,
+  "coverCaption": "Editorial illustration. The explorer below models dependencies; it is not a live system or benchmark.",
+  "sourceType": "topic",
+  "publishedUrl": null,
+  "featured": true,
+  "seriesOrder": 2,
+  "socialImage": {
+    "path": "assets/og-cache-delivery-v1.png",
+    "width": 1734,
+    "height": 907,
+    "alt": "Keeping Parallel Development Fast — Docker, warm caches, PostgreSQL, and precise invalidation."
+  }
+}
