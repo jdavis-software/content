@@ -129,6 +129,13 @@
           "minLength": 1
         }
       }
+    },
+    "coverCaption": {
+      "type": "string"
+    },
+    "seriesOrder": {
+      "type": "integer",
+      "minimum": 1
     }
   }
 }

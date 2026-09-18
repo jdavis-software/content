@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {readFile,mkdtemp,cp,rm,writeFile} from 'node:fs/promises';
+import {readdir,readFile,mkdtemp,cp,rm,writeFile} from 'node:fs/promises';
 import path from 'node:path';
 import {tmpdir} from 'node:os';
 import {fileURLToPath} from 'node:url';
@@ -9,7 +9,8 @@ import {devopsFlow,insertDevops,DEVOPS_ANCHOR} from '../lib/devops-flow.mjs';
 import {build} from '../lib/site.mjs';
 import {fingerprints,loadPackage} from '../lib/content.mjs';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..'),slug='parallel-agent-engineering';
-async function fixture(t){const dir=await mkdtemp(path.join(tmpdir(),'devops-'));t.after(()=>rm(dir,{recursive:true,force:true}));for(const file of ['articles','site','lib','studio.config.json'])await cp(path.join(root,file),path.join(dir,file),{recursive:true});return dir;}
+async function fixture(t){const dir=await mkdtemp(path.join(tmpdir(),'devops-'));t.after(()=>rm(dir,{recursive:true,force:true}));for(const file of ['articles','site','lib','studio.config.json'])await cp(path.join(root,file),path.join(dir,file),{recursive:true});for(const entry of await readdir(path.join(dir,'articles')))if(entry!==slug)await rm(path.join(dir,'articles',entry),{recursive:true,force:true});
+  return dir;}
 test('DevOps scenarios reject unknown modes and prototype keys',()=>{for(const v of ['invalid','__proto__','toString'])assert.throws(()=>evaluate(v));assert.throws(()=>evaluate('ui','latest'));});
 test('UI changes select the console without recomputing unrelated services',()=>{const m=evaluate('ui');assert.equal(m.states.console,'rebuild');assert.equal(m.states['ts-client'],'reuse');assert.equal(m.states.api,'outside');assert.equal(m.states.worker,'outside');assert.equal(m.caches.go,'Not needed');});
 test('a cold cache miss is not an invalidated input',()=>{const a=evaluate('ui','warm'),b=evaluate('ui','cold');assert.equal(b.states['ts-client'],'cold');assert.equal(b.states.console,'rebuild');assert.equal(b.states.api,'outside');assert.equal(b.states.worker,'outside');assert.deepEqual(a.checks,b.checks);assert.deepEqual(a.runtime,b.runtime);});

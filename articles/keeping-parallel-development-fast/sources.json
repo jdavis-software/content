@@ -1,21 +1,154 @@
 [
-  {"id":"S01","title":"Docker cache optimization","url":"https://docs.docker.com/build/cache/optimize/","supports":"Layer ordering, build context, and the distinction between layer reuse and useful persistent tool caches.","checkedAt":"2026-09-17","type":"primary"},
-  {"id":"S02","title":"Docker build-cache invalidation","url":"https://docs.docker.com/build/cache/invalidation/","supports":"RUN-cache freshness and build-secret content not automatically invalidating cached build steps.","checkedAt":"2026-09-17","type":"primary"},
-  {"id":"S03","title":"BuildKit cache-mount options","url":"https://docs.docker.com/reference/dockerfile/#run---mounttypecache","supports":"Cache mount persistence, empty-cache correctness, and shared/private/locked coordination.","checkedAt":"2026-09-17","type":"primary"},
-  {"id":"S04","title":"Docker cache storage backends","url":"https://docs.docker.com/build/cache/backends/","supports":"External cache import/export and ownership of cache export locations.","checkedAt":"2026-09-17","type":"primary"},
-  {"id":"S05","title":"pnpm fetch","url":"https://pnpm.io/cli/fetch","supports":"Preparing dependencies from lockfile/configuration before copying the full application; local dependency caveats.","checkedAt":"2026-09-17","type":"primary"},
-  {"id":"S06","title":"Go build and test cache","url":"https://pkg.go.dev/cmd/go#hdr-Build_and_test_caching","supports":"Separate build/test caches, concurrent invocation safety, and underlying input considerations.","checkedAt":"2026-09-17","type":"primary"},
-  {"id":"S07","title":"Go test command","url":"https://pkg.go.dev/cmd/go#hdr-Test_packages","supports":"Successful package-list test-result caching and the explicit -count=1 fresh-test option.","checkedAt":"2026-09-17","type":"primary"},
-  {"id":"S08","title":"Nx task-result caching","url":"https://nx.dev/docs/features/cache-task-results","supports":"Restoring outputs of cacheable tasks rather than invoking commands again.","checkedAt":"2026-09-17","type":"primary"},
-  {"id":"S09","title":"Nx affected tasks","url":"https://nx.dev/docs/features/ci-features/affected","supports":"Git base/head and project dependency graph drive affected selection.","checkedAt":"2026-09-17","type":"primary"},
-  {"id":"S10","title":"Nx inputs and dependent-task outputs","url":"https://nx.dev/docs/reference/inputs","supports":"Generated output hashing, Git-ignored input behavior, and the need for complete consumer input patterns.","checkedAt":"2026-09-17","type":"primary"},
-  {"id":"S11","title":"Docker Compose Watch","url":"https://docs.docker.com/compose/how-tos/file-watch/","supports":"Synchronization/restart/rebuild modes and platform-specific dependency-directory caveats.","checkedAt":"2026-09-17","type":"primary"},
-  {"id":"S12","title":"Docker Compose project names","url":"https://docs.docker.com/compose/how-tos/project-name/","supports":"Project-level resource naming; not a claim of complete runtime isolation.","checkedAt":"2026-09-17","type":"primary"},
-  {"id":"S13","title":"sqlc configuration","url":"https://docs.sqlc.dev/en/latest/reference/config.html","supports":"Generator inputs include schema and query source files, distinct from executing migrations.","checkedAt":"2026-09-17","type":"primary"},
-  {"id":"S14","title":"PostgreSQL CREATE DATABASE","url":"https://www.postgresql.org/docs/current/sql-createdatabase.html","supports":"Template cloning constraints, no concurrent template sessions, and transaction-block restriction.","checkedAt":"2026-09-17","type":"primary"},
-  {"id":"S15","title":"sqlc transaction binding","url":"https://docs.sqlc.dev/en/latest/howto/transactions.html","supports":"Generated query methods can bind to an existing transaction through WithTx.","checkedAt":"2026-09-17","type":"primary"},
-  {"id":"S16","title":"PostgreSQL transaction isolation","url":"https://www.postgresql.org/docs/current/transaction-iso.html","supports":"Read Committed statement snapshots and transaction retry requirements under stronger isolation.","checkedAt":"2026-09-17","type":"primary"},
-  {"id":"S17","title":"Temporal persistence","url":"https://docs.temporal.io/temporal-service/persistence","supports":"Temporal Service-owned execution/history persistence, distinct from a worker build artifact.","checkedAt":"2026-09-17","type":"primary"},
-  {"id":"S18","title":"Temporal Go testing and replay","url":"https://docs.temporal.io/develop/go/testing-suite","supports":"Representative-history replay as compatibility evidence for Workflow Definition changes.","checkedAt":"2026-09-17","type":"primary"},
-  {"id":"S19","title":"Docker build practices and image pinning","url":"https://docs.docker.com/build/building/best-practices/#pin-base-image-versions","supports":"Moving tags versus fixed image digests and explicit update responsibility.","checkedAt":"2026-09-17","type":"primary"}
+  {
+    "id": "S01",
+    "title": "Docker cache optimization",
+    "url": "https://docs.docker.com/build/cache/optimize/",
+    "supports": "Layer ordering, build context, and the distinction between layer reuse and useful persistent tool caches.",
+    "checkedAt": "2026-09-17",
+    "type": "primary"
+  },
+  {
+    "id": "S02",
+    "title": "Docker build-cache invalidation",
+    "url": "https://docs.docker.com/build/cache/invalidation/",
+    "supports": "RUN-cache freshness and build-secret content not automatically invalidating cached build steps.",
+    "checkedAt": "2026-09-17",
+    "type": "primary"
+  },
+  {
+    "id": "S03",
+    "title": "BuildKit cache-mount options",
+    "url": "https://docs.docker.com/reference/dockerfile/#run---mounttypecache",
+    "supports": "Cache mount persistence, empty-cache correctness, and shared/private/locked coordination.",
+    "checkedAt": "2026-09-17",
+    "type": "primary"
+  },
+  {
+    "id": "S04",
+    "title": "Docker cache storage backends",
+    "url": "https://docs.docker.com/build/cache/backends/",
+    "supports": "External cache import/export and ownership of cache export locations.",
+    "checkedAt": "2026-09-17",
+    "type": "primary"
+  },
+  {
+    "id": "S05",
+    "title": "pnpm fetch",
+    "url": "https://pnpm.io/cli/fetch",
+    "supports": "Preparing dependencies from lockfile/configuration before copying the full application; local dependency caveats.",
+    "checkedAt": "2026-09-17",
+    "type": "primary"
+  },
+  {
+    "id": "S06",
+    "title": "Go build and test cache",
+    "url": "https://pkg.go.dev/cmd/go#hdr-Build_and_test_caching",
+    "supports": "Separate build/test caches, concurrent invocation safety, and underlying input considerations.",
+    "checkedAt": "2026-09-17",
+    "type": "primary"
+  },
+  {
+    "id": "S07",
+    "title": "Go test command",
+    "url": "https://pkg.go.dev/cmd/go#hdr-Test_packages",
+    "supports": "Successful package-list test-result caching and the explicit -count=1 fresh-test option.",
+    "checkedAt": "2026-09-17",
+    "type": "primary"
+  },
+  {
+    "id": "S08",
+    "title": "Nx task-result caching",
+    "url": "https://nx.dev/docs/features/cache-task-results",
+    "supports": "Restoring outputs of cacheable tasks rather than invoking commands again.",
+    "checkedAt": "2026-09-17",
+    "type": "primary"
+  },
+  {
+    "id": "S09",
+    "title": "Nx affected tasks",
+    "url": "https://nx.dev/docs/features/ci-features/affected",
+    "supports": "Git base/head and project dependency graph drive affected selection.",
+    "checkedAt": "2026-09-17",
+    "type": "primary"
+  },
+  {
+    "id": "S10",
+    "title": "Nx inputs and dependent-task outputs",
+    "url": "https://nx.dev/docs/reference/inputs",
+    "supports": "Generated output hashing, Git-ignored input behavior, and the need for complete consumer input patterns.",
+    "checkedAt": "2026-09-17",
+    "type": "primary"
+  },
+  {
+    "id": "S11",
+    "title": "Docker Compose Watch",
+    "url": "https://docs.docker.com/compose/how-tos/file-watch/",
+    "supports": "Synchronization/restart/rebuild modes and platform-specific dependency-directory caveats.",
+    "checkedAt": "2026-09-17",
+    "type": "primary"
+  },
+  {
+    "id": "S12",
+    "title": "Docker Compose project names",
+    "url": "https://docs.docker.com/compose/how-tos/project-name/",
+    "supports": "Project-level resource naming; not a claim of complete runtime isolation.",
+    "checkedAt": "2026-09-17",
+    "type": "primary"
+  },
+  {
+    "id": "S13",
+    "title": "sqlc configuration",
+    "url": "https://docs.sqlc.dev/en/latest/reference/config.html",
+    "supports": "Generator inputs include schema and query source files, distinct from executing migrations.",
+    "checkedAt": "2026-09-17",
+    "type": "primary"
+  },
+  {
+    "id": "S14",
+    "title": "PostgreSQL CREATE DATABASE",
+    "url": "https://www.postgresql.org/docs/current/sql-createdatabase.html",
+    "supports": "Template cloning constraints, no concurrent template sessions, and transaction-block restriction.",
+    "checkedAt": "2026-09-17",
+    "type": "primary"
+  },
+  {
+    "id": "S15",
+    "title": "sqlc transaction binding",
+    "url": "https://docs.sqlc.dev/en/latest/howto/transactions.html",
+    "supports": "Generated query methods can bind to an existing transaction through WithTx.",
+    "checkedAt": "2026-09-17",
+    "type": "primary"
+  },
+  {
+    "id": "S16",
+    "title": "PostgreSQL transaction isolation",
+    "url": "https://www.postgresql.org/docs/current/transaction-iso.html",
+    "supports": "Read Committed statement snapshots and transaction retry requirements under stronger isolation.",
+    "checkedAt": "2026-09-17",
+    "type": "primary"
+  },
+  {
+    "id": "S17",
+    "title": "Temporal persistence",
+    "url": "https://docs.temporal.io/temporal-service/persistence",
+    "supports": "Temporal Service-owned execution/history persistence, distinct from a worker build artifact.",
+    "checkedAt": "2026-09-17",
+    "type": "primary"
+  },
+  {
+    "id": "S18",
+    "title": "Temporal Go testing and replay",
+    "url": "https://docs.temporal.io/develop/go/testing-suite",
+    "supports": "Representative-history replay as compatibility evidence for Workflow Definition changes.",
+    "checkedAt": "2026-09-17",
+    "type": "primary"
+  },
+  {
+    "id": "S19",
+    "title": "Docker build practices and image pinning",
+    "url": "https://docs.docker.com/build/building/best-practices/#pin-base-image-versions",
+    "supports": "Moving tags versus fixed image digests and explicit update responsibility.",
+    "checkedAt": "2026-09-17",
+    "type": "primary"
+  }
 ]
