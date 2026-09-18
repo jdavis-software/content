@@ -43,9 +43,16 @@ jobs:
       - name: Verify public article and exact animation assets
         run: |
           python3 - <<'PY'
-          import hashlib, os, pathlib, time, urllib.request
+          import hashlib, os, pathlib, struct, time, urllib.request
+          from html.parser import HTMLParser
+          class MetaTags(HTMLParser):
+              def __init__(self):
+                  super().__init__(); self.values = {}
+              def handle_starttag(self, tag, attrs):
+                  attrs = dict(attrs)
+                  if tag == 'meta': self.values[attrs.get('property', attrs.get('name'))] = attrs.get('content')
           base = 'https://jdavis-software.github.io/content/'
-          paths = ['articles/parallel-agent-engineering/', 'agent-flow.js', 'agent-flow-model.js', 'agent-flow.css', 'devops-flow.js', 'devops-model.js', 'devops-flow.css', 'vendor/anime-4.5.0.esm.min.js']
+          paths = ['articles/parallel-agent-engineering/', 'agent-flow.js', 'agent-flow-model.js', 'agent-flow.css', 'devops-flow.js', 'devops-model.js', 'devops-flow.css', 'vendor/anime-4.5.0.esm.min.js', 'articles/parallel-agent-engineering/assets/og-linkedin-v1.png']
           for attempt in range(8):
               try:
                   for route in paths:
@@ -53,12 +60,23 @@ jobs:
                       with urllib.request.urlopen(url, timeout=20) as response:
                           assert response.status == 200
                           data = response.read()
+                          if route.endswith('.png'): assert response.headers.get_content_type() == 'image/png'
                       if route.endswith('/'):
                           assert b'id="parallel-agent-flow"' in data, 'Agent diagram not served yet'
                           assert b'id="devops-invalidation"' in data, 'DevOps diagram not served yet'
                           assert b'DriftGate' not in data
+                          tags = MetaTags(); tags.feed(data.decode('utf-8'))
+                          image = base + 'articles/parallel-agent-engineering/assets/og-linkedin-v1.png'
+                          assert tags.values.get('og:image') == image
+                          assert tags.values.get('twitter:image') == image
+                          assert tags.values.get('og:image:type') == 'image/png'
+                          assert tags.values.get('og:image:width') == '1200'
+                          assert tags.values.get('og:image:height') == '627'
                       else:
-                          expected = pathlib.Path('site', route).read_bytes()
+                          expected = (pathlib.Path(route) if route.startswith('articles/') else pathlib.Path('site', route)).read_bytes()
+                          if route.endswith('.png'):
+                              assert data[:8] == b'\x89PNG\r\n\x1a\n'
+                              assert struct.unpack('>II', data[16:24]) == (1200, 627)
                           assert hashlib.sha256(data).digest() == hashlib.sha256(expected).digest(), 'Stale asset: ' + route
                       print('VERIFIED 200', route)
                   break

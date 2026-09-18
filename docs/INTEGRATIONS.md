@@ -7,7 +7,7 @@ The base pipeline needs only Node 22+. These integration routes are explicit; â€
 | Research and writing | Interactive host + six original skills | Packaged; pilot produced in this build session |
 | GitHub source | Existing connector or local Git | Repository publication separately verified in handoff |
 | Notion input | Host connector fetch + private extraction | Existing plan fetched; not a headless Notion importer |
-| GPT Image | Host image tool guided by plan-visuals | Pilot social card generated via host; no standalone image API credential required |
+| GPT Image | Host image tool guided by plan-visuals | Brief prepared; image generation not run for pilot |
 | Mermaid | Editable .mmd + installed host renderer | Source included; pilot cover is original SVG, not a claimed Mermaid render |
 | Whimsical | Optional authenticated host connector | Not required by base pipeline; no board created |
 | LinkedIn Animated Infographics | Optional installed specialist skill | Brief prepared; no animation exported |

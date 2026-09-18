@@ -3,25 +3,26 @@
     "file": "cover.svg",
     "method": "original-code-authored-vector",
     "generatedByModel": false,
-    "description": "Illustrative worktree and validation graph, not vendor branding or benchmark data."
+    "description": "Illustrative worktree and validation graph, not vendor branding or benchmark data.",
+    "role": "Retained original vector source, superseded as the social card and homepage thumbnail."
   },
   "gptImage": {
     "status": "completed",
-    "file": "og-linkedin-v1.png",
-    "method": "OpenAI host image generation; exact model not exposed",
-    "generationId": "ede29eb5-26f6-45fb-a5a6-7d5b988d58a2",
-    "sourceDimensions": [
-      1734,
-      907
+    "tool": "image_gen",
+    "model": "not exposed by the host",
+    "generationId": "257d9f64-6845-4ec5-9ebb-bf60e1d9a45c",
+    "output": "og-linkedin-v1.png",
+    "originalDimensions": [
+      1536,
+      1024
     ],
-    "dimensions": [
+    "exportDimensions": [
       1200,
       627
     ],
-    "processing": "RGB conversion and Lanczos resizing for a 1.91:1 social preview; no image regeneration",
-    "sha256": "3544eead1440283b4730b7d2d73510e80eba96900b0b23112b0247f54e1e19a2",
-    "purpose": "Static social preview and homepage thumbnail; interactive diagrams remain unchanged",
-    "note": "Illustrative artwork, not measured performance data or a connected architecture view."
+    "transform": "Center crop to 1536x803, then Lanczos resize to 1200x627; PNG export.",
+    "sha256": "45869bd494411d7c05298b3e1f106e0010711277a037b70b56c3e48184453156",
+    "notes": "Illustrative generated artwork; no claimed benchmark or product screenshot. The on-page interactive diagrams remain code-authored."
   },
   "animatedInfographic": {
     "status": "not-run",

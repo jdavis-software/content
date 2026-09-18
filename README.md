@@ -25,7 +25,7 @@ npm run studio -- status parallel-agent-engineering
 
 ## The first article
 
-**Parallel AI agents are changing how I architect software** covers TypeScript, Go, Nx, ESM, tsx, isolated worktrees, dependency-aware caching, CI and deployment. Public primary sources are recorded alongside the draft. A generated 1200×627 PNG is used for link previews and the homepage thumbnail. The original SVG source and both interactive diagrams remain intact. Image provenance lives alongside the article assets; animated infographic export remains optional.
+**Parallel AI agents are changing how I architect software** covers TypeScript, Go, Nx, ESM, tsx, isolated worktrees, dependency-aware caching, CI and deployment. Public primary sources are recorded alongside the draft. The article uses a generated 1200 × 627 PNG for social previews and the homepage thumbnail. The original SVG source is retained; the two interactive diagrams remain unchanged. Image provenance is recorded in the article package. See [social previews](docs/SOCIAL-PREVIEWS.md) for validation and LinkedIn cache-refresh steps.
 
 ## New content
 
