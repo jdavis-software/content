@@ -19,6 +19,7 @@
     "coverAlt": {"type": "string", "minLength": 1},
     "sourceType": {"enum": ["topic", "notion", "mixed"]},
     "publishedUrl": {"type": ["string", "null"], "format": "uri"},
+    "socialImage": {"type":"object","additionalProperties":false,"required":["src","width","height","type","alt"],"properties":{"src":{"type":"string","pattern":"^assets/[a-zA-Z0-9_.-]+\\.png$"},"width":{"type":"integer","minimum":1},"height":{"type":"integer","minimum":1},"type":{"const":"image/png"},"alt":{"type":"string","minLength":1}}},
     "featured": {"type": "boolean"}
   }
 }
