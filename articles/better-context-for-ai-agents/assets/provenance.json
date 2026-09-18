@@ -1,0 +1,12 @@
+{
+  "method": "Code-authored editorial composition rasterized with Pillow in the Higgsfield media sandbox",
+  "source": "cover-context-v1.svg is the editable layout reference, not a claim of byte-identical SVG-to-PNG rendering",
+  "raster": "og-context-v1.png",
+  "dimensions": [
+    1200,
+    627
+  ],
+  "sha256": "5e356fdb67d5abf9b5dcb2150239550ce959ad0ff8bfb2e87ba4b8402a65e24e",
+  "generatedImageUsed": false,
+  "note": "Host image-generation attempts returned worktree-themed artwork, not the selected topic. Those outputs were not published."
+}

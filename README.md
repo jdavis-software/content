@@ -32,6 +32,8 @@ npm run studio -- status parallel-agent-engineering
 1. [Parallel AI agents are changing how I architect software](https://jdavis-software.github.io/content/articles/parallel-agent-engineering/)
 2. [Keeping Parallel Development Fast: Docker, Warm Caches, PostgreSQL, and Precise Invalidation](https://jdavis-software.github.io/content/articles/keeping-parallel-development-fast/)
 
+3. [AI Agents Don’t Need the Entire Codebase. They Need the Right Context.](https://jdavis-software.github.io/content/articles/better-context-for-ai-agents/)
+
 The second installment reuses the DevOps explorer and adds a [small Go cache probe](examples/go-cache/README.md). The probe is optional; the site build still requires only Node. See [article-two verification](docs/ARTICLE-TWO.md).
 
 ## New content

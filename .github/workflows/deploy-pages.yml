@@ -1,6 +1,8 @@
 name: Deploy approved site
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
 permissions:
   contents: read
   pages: write
@@ -10,6 +12,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   build:
+    if: ${{ github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[article-three-release]') }}
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -40,9 +43,9 @@ jobs:
     timeout-minutes: 3
     steps:
       - uses: actions/checkout@v4
-      - name: Verify both public articles, feeds, social images, and browser assets
+      - name: Verify all public articles, feeds, social images, and browser assets
         run: python3 scripts/verify-publication.py
-      - name: Verify the new database roles section on the public article
+      - name: Verify the database roles section remains on article two
         run: |
           python3 - <<'PY'
           import time, urllib.request

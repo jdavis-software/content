@@ -59,7 +59,13 @@ def verify():
             assert image_bytes[:8] == b'\x89PNG\r\n\x1a\n'
             assert struct.unpack('>II', image_bytes[16:24]) == (image['width'], image['height'])
             assert hashlib.sha256(image_bytes).digest() == hashlib.sha256((directory / image['path']).read_bytes()).digest(), 'Stale social image'
-        assert b'id="devops-invalidation"' in body
+        if meta['slug'] in ['parallel-agent-engineering','keeping-parallel-development-fast']:
+            assert b'id="devops-invalidation"' in body
+        if meta['slug'] == 'better-context-for-ai-agents':
+            assert b'id="context-packet-explorer"' in body
+            assert b'Declared requirements satisfied' in body
+            assert b'fictional' in body
+            assert b'id="devops-invalidation"' not in body
         if meta['slug'] == 'parallel-agent-engineering':
             assert b'id="parallel-agent-flow"' in body
         if meta['slug'] == 'keeping-parallel-development-fast':
@@ -76,7 +82,7 @@ def verify():
         body, _ = fetch(BASE + feed)
         for directory, meta in articles:
             assert ('/articles/' + meta['slug'] + '/').encode() in body
-    for relative in ['style.css','client.js','devops-flow.js','devops-model.js','devops-flow.css','agent-flow.js','agent-flow-model.js','agent-flow.css','vendor/anime-4.5.0.esm.min.js']:
+    for relative in ['context-model.js','context-explorer.js','context-explorer.css','style.css','client.js','devops-flow.js','devops-model.js','devops-flow.css','agent-flow.js','agent-flow-model.js','agent-flow.css','vendor/anime-4.5.0.esm.min.js']:
         data, _ = fetch(BASE + relative)
         assert hashlib.sha256(data).digest() == hashlib.sha256((ROOT / 'site' / relative).read_bytes()).digest(), 'Stale browser asset: ' + relative
     print('VERIFIED homepage, both feeds, and exact browser assets. LinkedIn crawler not invoked.')

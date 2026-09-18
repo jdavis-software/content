@@ -1,0 +1,82 @@
+[
+  {
+    "id": "S01",
+    "title": "Lost in the Middle (2024)",
+    "url": "https://aclanthology.org/2024.tacl-1.9/",
+    "supports": "Historical positional sensitivity on the paper’s tasks; not a benchmark of current coding agents.",
+    "checkedAt": "2026-09-17",
+    "type": "primary"
+  },
+  {
+    "id": "S02",
+    "title": "Nx project and task graphs",
+    "url": "https://nx.dev/docs/features/explore-graph",
+    "supports": "Project and target graphs have distinct responsibilities, separate from decisions and runtime authority.",
+    "checkedAt": "2026-09-17",
+    "type": "primary"
+  },
+  {
+    "id": "S03",
+    "title": "TypeScript code navigation",
+    "url": "https://code.visualstudio.com/docs/typescript/typescript-editing#_code-navigation",
+    "supports": "Definitions, references, type definitions and implementations are navigation capabilities, not just compiler diagnostics.",
+    "checkedAt": "2026-09-17",
+    "type": "primary"
+  },
+  {
+    "id": "S04",
+    "title": "Gopls semantic navigation",
+    "url": "https://go.dev/gopls/features/navigation",
+    "supports": "Definition/reference/implementation queries and documented build-configuration and dynamic-call limitations.",
+    "checkedAt": "2026-09-17",
+    "type": "primary"
+  },
+  {
+    "id": "S05",
+    "title": "Git status",
+    "url": "https://git-scm.com/docs/git-status",
+    "supports": "Staged, working-tree and untracked state must be distinguished when describing source.",
+    "checkedAt": "2026-09-17",
+    "type": "primary"
+  },
+  {
+    "id": "S06",
+    "title": "Git diff",
+    "url": "https://git-scm.com/docs/git-diff",
+    "supports": "Tracked diffs describe selected comparisons, not automatically all workspace content.",
+    "checkedAt": "2026-09-17",
+    "type": "primary"
+  },
+  {
+    "id": "S07",
+    "title": "Gopls implementation model",
+    "url": "https://go.dev/gopls/design/implementation",
+    "supports": "Snapshots, saved files, unsaved overlays and build configuration are explicit state in the documented design.",
+    "checkedAt": "2026-09-17",
+    "type": "primary"
+  },
+  {
+    "id": "S08",
+    "title": "Effective context engineering for AI agents",
+    "url": "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents",
+    "supports": "Just-in-time context acquisition using lightweight identifiers is a vendor-described pattern, not a universal performance guarantee.",
+    "checkedAt": "2026-09-17",
+    "type": "primary"
+  },
+  {
+    "id": "S09",
+    "title": "SQLite FTS5",
+    "url": "https://www.sqlite.org/fts5.html",
+    "supports": "Local lexical full-text retrieval, including phrase and prefix queries; not automatically vector retrieval.",
+    "checkedAt": "2026-09-17",
+    "type": "primary"
+  },
+  {
+    "id": "S10",
+    "title": "OWASP prompt injection",
+    "url": "https://genai.owasp.org/llmrisk/llm01-prompt-injection/",
+    "supports": "Indirect prompt injection through external content and the need for independently enforced controls.",
+    "checkedAt": "2026-09-17",
+    "type": "primary"
+  }
+]
