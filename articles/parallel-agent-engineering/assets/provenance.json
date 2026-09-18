@@ -1,5 +1,31 @@
 {
-  "cover": {"file":"cover.svg","method":"original-code-authored-vector","generatedByModel":false,"description":"Illustrative worktree and validation graph, not vendor branding or benchmark data."},
-  "gptImage": {"status":"not-run","reason":"The pilot uses an editable diagrammatic cover. A host-driven GPT Image brief is included for a later optional image pass."},
-  "animatedInfographic": {"status":"not-run","reason":"Specialist plugin remains an explicit optional production pass; no animation export is claimed."}
+  "cover": {
+    "file": "cover.svg",
+    "method": "original-code-authored-vector",
+    "generatedByModel": false,
+    "description": "Illustrative worktree and validation graph, not vendor branding or benchmark data.",
+    "role": "Retained original vector source, superseded as the social card and homepage thumbnail."
+  },
+  "gptImage": {
+    "status": "completed",
+    "tool": "image_gen",
+    "model": "not exposed by the host",
+    "generationId": "257d9f64-6845-4ec5-9ebb-bf60e1d9a45c",
+    "output": "og-linkedin-v1.png",
+    "originalDimensions": [
+      1536,
+      1024
+    ],
+    "exportDimensions": [
+      1200,
+      627
+    ],
+    "transform": "Center crop to 1536x803, then Lanczos resize to 1200x627; PNG export.",
+    "sha256": "45869bd494411d7c05298b3e1f106e0010711277a037b70b56c3e48184453156",
+    "notes": "Illustrative generated artwork; no claimed benchmark or product screenshot. The on-page interactive diagrams remain code-authored."
+  },
+  "animatedInfographic": {
+    "status": "not-run",
+    "reason": "Specialist plugin remains an explicit optional production pass; no animation export is claimed."
+  }
 }
