@@ -1,0 +1,20 @@
+{
+  "cover": {
+    "file": "og-cache-delivery-v1.png",
+    "tool": "image_gen",
+    "generationId": "95c8d100-d3b2-4360-b493-dded539737dd",
+    "model": "not exposed by the host",
+    "dimensions": [
+      1734,
+      907
+    ],
+    "transform": "Original RGB PNG; no crop or resize.",
+    "sha256": "519ffa6191cfa134e57613e40cd08dd746f34dab732a67cfeaa17aa9f973e680",
+    "role": "Editorial cover and raster social preview, not runtime telemetry or a benchmark."
+  },
+  "interactiveDiagram": {
+    "method": "Reuse existing authored DevOps model, HTML, CSS, and browser controls",
+    "model": "site/devops-model.js",
+    "newRemoteService": false
+  }
+}

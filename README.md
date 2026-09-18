@@ -27,6 +27,13 @@ npm run studio -- status parallel-agent-engineering
 
 **Parallel AI agents are changing how I architect software** covers TypeScript, Go, Nx, ESM, tsx, isolated worktrees, dependency-aware caching, CI and deployment. Public primary sources are recorded alongside the draft. The article uses a generated 1200 × 627 PNG for social previews and the homepage thumbnail. The original SVG source is retained; the two interactive diagrams remain unchanged. Image provenance is recorded in the article package. See [social previews](docs/SOCIAL-PREVIEWS.md) for validation and LinkedIn cache-refresh steps.
 
+## Engineering series
+
+1. [Parallel AI agents are changing how I architect software](https://jdavis-software.github.io/content/articles/parallel-agent-engineering/)
+2. [Keeping Parallel Development Fast: Docker, Warm Caches, PostgreSQL, and Precise Invalidation](https://jdavis-software.github.io/content/articles/keeping-parallel-development-fast/)
+
+The second installment reuses the DevOps explorer and adds a [small Go cache probe](examples/go-cache/README.md). The probe is optional; the site build still requires only Node. See [article-two verification](docs/ARTICLE-TWO.md).
+
 ## New content
 
 ```bash

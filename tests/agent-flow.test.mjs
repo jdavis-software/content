@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {readFile, mkdtemp, cp, rm, writeFile} from 'node:fs/promises';
+import {readdir,readFile, mkdtemp, cp, rm, writeFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import {tmpdir} from 'node:os';
 import path from 'node:path';
@@ -15,6 +15,7 @@ async function fixture(t) {
   const out = await mkdtemp(path.join(tmpdir(), 'agent-flow-'));
   t.after(() => rm(out, {recursive:true, force:true}));
   for (const name of ['articles','site','lib','studio.config.json']) await cp(path.join(root,name),path.join(out,name),{recursive:true});
+  for(const entry of await readdir(path.join(out,'articles')))if(entry!==slug)await rm(path.join(out,'articles',entry),{recursive:true,force:true});
   return out;
 }
 test('the illustrative timeline is bounded and has independent lane timings', () => {

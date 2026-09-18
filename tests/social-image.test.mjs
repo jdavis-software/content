@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {readFile,mkdtemp,cp,rm,writeFile} from 'node:fs/promises';
+import {readdir,readFile,mkdtemp,cp,rm,writeFile} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
@@ -14,7 +14,8 @@ async function fixture(t) {
  const dir=await mkdtemp(path.join(tmpdir(),'social-preview-'));
  t.after(()=>rm(dir,{recursive:true,force:true}));
  for(const file of ['articles','site','lib','scripts','skills','plugin.json','package.json','studio.config.json'])await cp(path.join(root,file),path.join(dir,file),{recursive:true});
- return dir;
+ for(const entry of await readdir(path.join(dir,'articles')))if(entry!==slug)await rm(path.join(dir,'articles',entry),{recursive:true,force:true});
+  return dir;
 }
 test('the generated social PNG has pinned bytes and real 1200x627 dimensions',async()=>{
  const bytes=await readFile(path.join(root,imagePath));
