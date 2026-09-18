@@ -1,6 +1,8 @@
 name: Deploy approved site
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
 permissions:
   contents: read
   pages: write
@@ -10,6 +12,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   build:
+    if: ${{ github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[database-roles-release]') }}
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -42,3 +45,22 @@ jobs:
       - uses: actions/checkout@v4
       - name: Verify both public articles, feeds, social images, and browser assets
         run: python3 scripts/verify-publication.py
+      - name: Verify the new database roles section on the public article
+        run: |
+          python3 - <<'PY'
+          import time, urllib.request
+          url = 'https://jdavis-software.github.io/content/articles/keeping-parallel-development-fast/'
+          for attempt in range(8):
+              try:
+                  with urllib.request.urlopen(url, timeout=20) as response:
+                      assert response.status == 200
+                      html = response.read().decode('utf-8')
+                  for text in ['id="not-every-database-is-another-source-of-truth"', 'Temporal-owned PostgreSQL persistence', 'Optional SQLite FTS index', 'approved documents → a versioned knowledge package → an optional SQLite index', 'The SQLite index is optional too.', 'https://www.sqlite.org/fts5.html']:
+                      assert text in html, 'Missing article clarification: ' + text
+                  print('VERIFIED public database ownership section, document-derived SQLite index, optional status, and citation')
+                  break
+              except Exception:
+                  if attempt == 7:
+                      raise
+                  time.sleep(5)
+          PY

@@ -174,9 +174,30 @@ That changes which verification is relevant. A deterministic Workflow-code chang
 
 Temporal's testing guidance recommends replaying representative histories when checking Workflow Definition changes. Passing those histories is evidence for the cases exercised, not a proof about every possible execution. Histories can also contain sensitive inputs; keep the fixtures private or properly sanitized. [Temporal Go testing and replay](https://docs.temporal.io/develop/go/testing-suite).
 
-I keep application PostgreSQL, Temporal persistence, and any derived search index visually and operationally distinct. They may use similar storage technology, but their ownership and recovery procedures are different.
+## Not every database is another source of truth
 
-An optional lexical or vector index can be rebuilt from its own canonical inputs when its contract permits. It is not a reason to add another database to every development environment, and it is not a substitute for workflow history or application records.
+The supporting stores need explicit roles, not just a collection of database logos beside PostgreSQL. My intended split is application state, workflow state, and an optional knowledge index. Those are different ownership and recovery boundaries—even when two of them use the same database engine.
+
+| Store | Role | What changes or restores it |
+| --- | --- | --- |
+| Application PostgreSQL | Authoritative application records and business invariants | Application transactions, controlled migrations, and database recovery |
+| Temporal-owned PostgreSQL persistence | Durable workflow execution state and history owned by the Temporal Service | Service-managed writes, supported schema upgrades, retention, and recovery procedures |
+| Optional SQLite FTS index | A derived local search index of approved knowledge documents | Reindex from the relevant document revision and index configuration |
+| Build caches | Reusable results of declared computations | Recompute or restore when the relevant key changes or the result is unavailable |
+
+**Application PostgreSQL stays the source of truth for application data.** A managed PostgreSQL service changes how I operate it, not which component owns those records. I do not replace that authority with a search result or a cached context pack.
+
+**Temporal owns its persistence separately.** In the PostgreSQL-backed deployment I am planning, it has distinct databases and credentials, including the required default and visibility stores. Sharing a server instance is a resource-sizing decision, not permission to share application tables or migration ownership. Workers talk to the Temporal Service; Activities can separately access application PostgreSQL through the application's adapters. Temporal persistence is not a replica derived from application rows. [Temporal persistence responsibilities](https://docs.temporal.io/temporal-service/persistence).
+
+**SQLite FTS is an optional developer-knowledge index, not another application database.** I would first use the versioned document manifest, direct file reads, and existing exact-text search. If repeated lookup friction warrants an index, SQLite's FTS5 module provides local full-text search over the selected documents. That is lexical retrieval; it does not itself make the database a semantic vector store. [SQLite FTS5](https://www.sqlite.org/fts5.html).
+
+The source path is **approved documents → a versioned knowledge package → an optional SQLite index**. It is not automatically application PostgreSQL → SQLite. I would key that index to the document revision and relevant parser, tokenizer, and index-schema versions, and retain enough provenance to rebuild it. A source change outside that document set should not automatically rebuild the knowledge index.
+
+That makes invalidation concrete. A revised architecture document can require reindexing without migrating application PostgreSQL. A SQL migration can require application compatibility checks without resetting Temporal history. A cold build cache should reset neither durable store. Changes to access permissions or document deletion must also reach retrieval: a rebuildable index is not permission to keep serving revoked material.
+
+Embeddings or a hosted retrieval service would be a separate, measured addition, with explicit source and model/version boundaries—not an already-deployed requirement. The SQLite index is optional too. None of these choices implies adding a general cache, analytics database, or hosted vector database to every environment.
+
+**Rebuild derived knowledge from its sources. Recover durable state through its owner's procedures. Never confuse either with clearing a build cache.**
 
 ## Application-data invalidation is a different problem
 
