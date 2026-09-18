@@ -17,9 +17,17 @@
     "DevOps",
     "PostgreSQL"
   ],
-  "coverImage": "assets/cover.svg",
-  "coverAlt": "Independent engineering workstreams converging at a shared validation gate",
+  "coverImage": "assets/og-linkedin-v1.png",
+  "coverAlt": "Engineering for parallel agents: one contract branches into three isolated worktrees, which converge through validation into a release.",
   "sourceType": "mixed",
   "publishedUrl": null,
-  "featured": true
+  "featured": true,
+  "coverWidth": 1200,
+  "coverHeight": 627,
+  "socialImage": {
+    "path": "assets/og-linkedin-v1.png",
+    "width": 1200,
+    "height": 627,
+    "alt": "Engineering for parallel agents: one contract branches into three isolated worktrees, which converge through validation into a release."
+  }
 }
