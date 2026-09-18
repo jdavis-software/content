@@ -1,0 +1,59 @@
+name: Verify social preview integration
+on:
+  push:
+    branches: [feature/social-preview-metadata]
+    paths: ['.github/workflows/integrate-social-meta.yml']
+permissions:
+  contents: write
+jobs:
+  integrate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Apply the locally tested metadata edits
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import json, hashlib
+          def edit(file, old, new):
+              p=Path(file); s=p.read_text(); assert s.count(old)==1, file
+              p.write_text(s.replace(old,new))
+          f='lib/site.mjs'
+          edit(f,"import {insertDevops}","import {socialImageFor,socialImageTags} from './social-image.mjs';\nimport {insertDevops}")
+          edit(f,"preview=false,article=null,toc=[]}","preview=false,article=null,socialPackage=null,toc=[]}")
+          edit(f,"  const image=article?`${canonical(c,article.slug)}${article.meta.coverImage}`:null;","  const social=socialImageFor(c,article||socialPackage);\n  const image=social?.url||null;")
+          edit(f,"${image?`<meta property=\"og:image\" content=\"${e(image)}\"><meta property=\"og:image:alt\" content=\"${e(article.meta.coverAlt)}\">`:''}","${socialImageTags(social)}")
+          edit(f,'<meta name="twitter:card" content="${image?\'summary_large_image\':\'summary\'}">','<meta name="twitter:card" content="${image?\'summary_large_image\':\'summary\'}"><meta name="twitter:title" content="${e(title)}"><meta name="twitter:description" content="${e(description)}"><meta property="og:site_name" content="${e(c.title)}">')
+          edit(f,'alt="${e(a.meta.coverAlt)}" width="1200" height="760"','alt="${e(a.meta.coverAlt)}" width="${a.meta.coverWidth||1200}" height="${a.meta.coverHeight||760}"')
+          edit(f,"title:'Engineering for the agent era',description:c.description,preview,body:","title:'Engineering for the agent era',description:c.description,preview,socialPackage:a,body:")
+          edit('lib/content.mjs',"import {createHash", "import {validateSocialImage} from './social-image.mjs';\nimport {createHash")
+          edit('lib/content.mjs',"  const supported=new Set(","  errors.push(...await validateSocialImage(pkg));\n  const supported=new Set(")
+          edit('lib/content.mjs',"['lib/site.mjs','lib/markdown.mjs'","['lib/site.mjs','lib/social-image.mjs','lib/markdown.mjs'")
+          p=Path('articles/parallel-agent-engineering/metadata.json'); m=json.loads(p.read_text())
+          alt='Engineering for parallel agents: one contract branches into three isolated worktrees, which converge through validation into a release.'
+          m.update(coverImage='assets/og-linkedin-v1.png',coverAlt=alt,coverWidth=1200,coverHeight=627,socialImage={'path':'assets/og-linkedin-v1.png','width':1200,'height':627,'alt':alt})
+          p.write_text(json.dumps(m,ensure_ascii=False,indent=2)+'\n')
+          p=Path('schemas/metadata.schema.json'); s=json.loads(p.read_text())
+          s['properties'].update({'coverWidth':{'type':'integer','minimum':1},'coverHeight':{'type':'integer','minimum':1},'socialImage':{'type':'object','required':['path','width','height','alt'],'additionalProperties':False,'properties':{'path':{'type':'string','pattern':r'^assets/[a-zA-Z0-9_.-]+\.(png|jpe?g)$'},'width':{'type':'integer','minimum':1},'height':{'type':'integer','minimum':1},'alt':{'type':'string','minLength':1}}}})
+          p.write_text(json.dumps(s,ensure_ascii=False,indent=2)+'\n')
+          p=Path('articles/parallel-agent-engineering/assets/provenance.json'); s=json.loads(p.read_text())
+          s['gptImage']={'status':'completed','tool':'image_gen','model':'not exposed by the host','generationId':'257d9f64-6845-4ec5-9ebb-bf60e1d9a45c','output':'og-linkedin-v1.png','originalDimensions':[1536,1024],'exportDimensions':[1200,627],'transform':'Center crop to 1536x803, then Lanczos resize to 1200x627; PNG export.','sha256':'45869bd494411d7c05298b3e1f106e0010711277a037b70b56c3e48184453156','notes':'Illustrative generated artwork; no claimed benchmark or product screenshot. The on-page interactive diagrams remain code-authored.'}
+          s['cover']['role']='Retained original vector source, superseded as the social card and homepage thumbnail.'
+          p.write_text(json.dumps(s,ensure_ascii=False,indent=2)+'\n')
+          edit('README.md','The cover is an editable original SVG; optional GPT Image and infographic briefs are supplied but no model-generated asset is claimed.','The article uses a generated 1200 × 627 PNG for social previews and the homepage thumbnail. The original SVG source is retained; the two interactive diagrams remain unchanged. Image provenance is recorded in the article package. See [social previews](docs/SOCIAL-PREVIEWS.md) for validation and LinkedIn cache-refresh steps.')
+          edit('brand/visual-guidelines.md','The pilot uses an original code-authored vector as its cover, not a GPT-generated asset and not a Mermaid-rendered result. The matching Mermaid flow is retained as editable source. Optional generated imagery and motion are separate reviewed assets with provenance.','The pilot has a generated raster social card and homepage thumbnail with recorded provenance. Its original code-authored vector and Mermaid source are retained, and its interactive diagrams remain authored HTML/SVG. Do not represent generated imagery as a measured system graph or a Mermaid-rendered result.')
+          edit('docs/MOTION.md','The existing cover asset remains the social-metadata image.','A separately declared raster social card supplies social metadata and the homepage thumbnail; the original vector asset is retained as source.')
+          expected={'lib/site.mjs':'07b6f2ed6b9a36d31e13f2b5260a86ee97f05d6d63441cf0f42ad9d89fb6fea2','lib/content.mjs':'5060ac2e03661fe98717faad219f3066304440cc05b880695d892818a1373674','README.md':'481463799522593922a4be059f300f26ec40e3ec359f93b0007d80b8ba15e2f7','brand/visual-guidelines.md':'c1f7b5a0035a6a55fb3c85791e4dcada7dcb6141d678b928a3072200b2f4561f','docs/MOTION.md':'9ff2ad0ba6a6ad0419efc81975c56cfa6065b04e5ed625af9049364a88b6df2c','schemas/metadata.schema.json':'9ddf7f3824782d816ca5ee9e93a52c18e784d16e37cc9d605305c62a01af63bb','articles/parallel-agent-engineering/metadata.json':'bc8951a4971db7e847c7c1a9b8796db7940e53e61716f66444ae3bcca74b0b80','articles/parallel-agent-engineering/assets/provenance.json':'36cdbf08563340bed91437d4e2a9fffab807c2587c16d7c2c4245756d152cedb','lib/social-image.mjs':'fb5cc65e36636bdbdbd5b9beec043c1ce48591da52d54a9788f7770524aa1837','tests/social-image.test.mjs':'776df7f876bbb79571afa4185cc647d2f424ad75f76f1fa42dc28908ea5a0c74','docs/SOCIAL-PREVIEWS.md':'e77df3610cceb64544998cb8ab1e7a161964cf503c5976f0416c30ec1809dbbc'}
+          for file,digest in expected.items():
+              assert hashlib.sha256(Path(file).read_bytes()).hexdigest()==digest, 'Source differs from local tests: '+file
+          PY
+      - run: npm run check
+      - name: Commit verified source edits only
+        run: |
+          git add lib/site.mjs lib/content.mjs README.md brand/visual-guidelines.md docs/MOTION.md schemas/metadata.schema.json articles/parallel-agent-engineering/metadata.json articles/parallel-agent-engineering/assets/provenance.json
+          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'feat: wire verified raster social metadata and thumbnail'
+          git push origin HEAD:feature/social-preview-metadata
