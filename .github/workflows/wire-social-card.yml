@@ -1,0 +1,39 @@
+name: Wire and verify approved social preview
+on:
+  push:
+    branches: [feature/social-preview-card]
+    paths: ['.github/workflows/wire-social-card.yml']
+permissions:
+  contents: write
+jobs:
+  integrate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Apply only exact pretested source edits
+        run: |
+          python3 - <<'PY'
+          import hashlib, json, pathlib
+          ops = json.loads(r'''[{"path":"README.md","before":"b1fc2b5d2aa76c00a2309e46f645a7af915536315e614384390a7b18262a84b1","edits":[[1591,1592,""],[1593,1594,"riginal SVG r"],[1595,1597,"ma"],[1598,1598,"n"],[1612,1613,"illust"],[1614,1618,""],[1619,1628,""],[1632,1644,";"],[1646,1648,""],[1649,1694,""],[1704,1704,"1200 × 627 PNG supplies the social preview and homepage thumbnail. The article retains both interactive diagrams. Metadata and "],[1710,1712,"provenance"],[1713,1713,"are do"],[1714,1717,"u"],[1719,1719,"nte"],[1720,1720," in `docs/SOCIAL-PREVIEW.md`"]],"after":"58a7bd14e8c3723e3fab25b786e729667def2d18553bb2b64d9914b5eebca415"},{"path":"docs/MOTION.md","before":"0df3dcded120b7745a1c06b182d2dcfbca7abf9049a2fd3decdd659fb6e2fb5f","edits":[[140,142,"A d"],[143,143,"dicated"],[144,147,"ra"],[149,156,""],[159,159,"`soci"],[160,167,"lI"],[169,169,"ge` suppl"],[170,171,"e"],[172,176,""],[183,184," "],[193,194,"and the ho"],[195,195,"ep"],[198,198," thumbnail; it does not replace this interactive diagram"]],"after":"81d777ceef59349a12fd74d2400fa8d80c5e9ed1817f08ecfb7100249e2ec441"},{"path":"lib/content.mjs","before":"490f0e1b6623188131c84db10358993b3cb6063ec887a346340c71703232bf56","edits":[[0,0,"import {validateSocialImage} from './social.mjs';\n"],[5585,5585,"errors.push(...await validateSocialImage(pkg));\n  "],[7388,7388,"social.mjs','lib/"]],"after":"a2e9c58675475d8fa560b6797db579955101790168ecacdab3f8a2210182e6b7"},{"path":"lib/site.mjs","before":"e273dd9a75e7abe6029430aef2e709bf43b4b4b67eb334a089b35e0a2d0296f3","edits":[[0,0,"import {socialTags} from './social.mjs';\n"],[939,939,"social=article?.meta.socialImage;\n  const "],[984,984,"social?.path || "],[1908,1913,"soci"],[1914,1930,"lT"],[1932,1947,"s"],[1953,1961,",soci"],[1962,1962,"l"],[1963,1982,"|| {"],[1985,2000,":"],[2021,2021,"}"],[2022,2026,""],[2104,2104,"}\"><meta name=\"twitter:title\" content=\"${e(title)}\"><meta name=\"twitter:description\" content=\"${e(description)"],[4247,4247,"thumbnail=a?.meta.socialImage || {path:a?.meta.coverImage,alt:a?.meta.coverAlt,width:1200,height:760};\n  const "],[4394,4394,"thumbn"],[4395,4395,"il"],[4396,4398,"pa"],[4399,4411,"h"],[4423,4423,"thumbn"],[4424,4424,"il"],[4425,4428,""],[4429,4436,""],[4449,4453,"${thumbnail.width}"],[4463,4466,"${thumbnail.height}"]],"after":"edf602732e98ae64cfa256c7a18ed9895e7f6eef457841b7d2dc9befa90ae4b0"},{"path":"schemas/metadata.schema.json","before":"ecb18a89c602af70f6016dfc84d1a6876350a023c47552c26cc47c3c21c904d2","edits":[[1278,1278,",\n    \"socialImage\": {\n      \"type\": \"object\",\n      \"additionalProperties\": false,\n      \"required\": [\"path\", \"alt\", \"width\", \"height\", \"type\"],\n      \"properties\": {\n        \"path\": {\"type\": \"string\", \"pattern\": \"^assets/[a-zA-Z0-9_.-]+\\\\.(png|jpg|jpeg)$\"},\n        \"alt\": {\"type\": \"string\", \"minLength\": 1},\n        \"width\": {\"type\": \"integer\", \"minimum\": 1},\n        \"height\": {\"type\": \"integer\", \"minimum\": 1},\n        \"type\": {\"enum\": [\"image/png\", \"image/jpeg\"]}\n      }\n    }"]],"after":"0690e14bc3445847985c92372f9c0dc33d0978a03480923a062dc4a73cfa1c8d"},{"path":"articles/parallel-agent-engineering/metadata.json","before":"d37eb49ef682c76839cc6d52f7703e65514a07c0e1f2f5cb1298b22c160a5e78","edits":[[779,779,",\n  \"socialImage\": {\n    \"path\": \"assets/og-parallel-agents-v1.png\",\n    \"alt\": \"Engineering for parallel agents: one contract branches into three isolated worktrees, then converges through validation into a release.\",\n    \"width\": 1200,\n    \"height\": 627,\n    \"type\": \"image/png\"\n  }"]],"after":"6f9aabc3618d9bb9b0d1e7aa82dc0e358e2ac468cb357cf63f638ec8f06b37cd"},{"path":"articles/parallel-agent-engineering/assets/provenance.json","before":"17426278e7ecda4f1fe9c4d130429e35514290b1b69c1fede94998a38bb1ee19","edits":[[14,14,"\n    "],[21,21," "],[33,33,"\n    "],[42,42," "],[74,74,"\n    "],[93,93," "],[99,99,"\n    "],[113,113," "],[197,197,"\n  "],[215,215,"\n    "],[224,224," \"completed\",\n    \"method\": \"ChatGPT image generation\",\n    \"modelVersion\": "],[228,236," "],[237,238,"xpo"],[239,245,"ed by t"],[248,249,"host\",\n    \"f"],[251,251,"e\": \"og-parallel-agents-v1.png\",\n    \"originalDimensions\": [\n      1536,\n      1024\n    ],\n    \"crop\": [\n      0,\n      110,\n      1536,\n      913\n    ],\n    \"outputDimensions\": [\n      1200,\n      627\n    ],\n    \"processing\": \"Center crop, Lanczos resize, optimized RGB PNG; no EXIF metadata.\",\n    \"sha256\": \"45869bd494411d7c05298b3e1f106e0010711277a037b70b56c3e48184453156\",\n    \"purpose\": \"Editorial social-preview illustration; n"],[254,256,"b"],[257,258,"nchmark data,"],[260,261,""],[262,262,"liv"],[263,265," sys"],[266,269,""],[270,270,"m"],[278,283,","],[284,285,""],[286,288,""],[289,290,""],[291,301,""],[304,314,"dor"],[317,324,"and"],[326,357,""],[358,364,""],[366,366,"\n  "],[395,395,"\n    "],[404,404," "],[414,414,"\n    "],[423,423," "],[520,520,"\n  "]],"after":"fb6635552e390ec7c4c7ee3dfe36ecc612063c6c6e5e62c2cb03127cd8c57e78"}]''')
+          for op in ops:
+              p = pathlib.Path(op['path'])
+              assert hashlib.sha256(p.read_bytes()).hexdigest() == op['before'], 'Unexpected base: ' + str(p)
+              text = p.read_text()
+              for start, end, replacement in reversed(op['edits']):
+                  text = text[:start] + replacement + text[end:]
+              assert hashlib.sha256(text.encode()).hexdigest() == op['after'], 'Output mismatch: ' + str(p)
+              p.write_text(text)
+          expected = {'lib/social.mjs':'0ff736eb0b578956c3c6ffaaf2dae73940ba6cc3118c03edcecdf2338d5fd843','tests/social.test.mjs':'826a83d7d7aa0ffedff93815b09dd678a6e82fd4c438b2dced2a5921719df99a','scripts/verify-social-preview.py':'02421e5cb18f5ae95fec174c449ddb62f082827f99bf6b742dc023db61f8b151','docs/SOCIAL-PREVIEW.md':'bb894769cb857200fbe1d7173e3811e125c4482fccee61be8a5f27bf3737aef6'}
+          for file, digest in expected.items():
+              assert hashlib.sha256(pathlib.Path(file).read_bytes()).hexdigest() == digest, 'New file differs from tested version: ' + file
+          PY
+      - run: npm run check
+      - name: Commit only tested article and renderer changes
+        run: |
+          git add README.md docs/MOTION.md lib/content.mjs lib/site.mjs schemas/metadata.schema.json articles/parallel-agent-engineering/metadata.json articles/parallel-agent-engineering/assets/provenance.json
+          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'feat: wire validated raster social metadata and homepage preview'
+          git push origin HEAD:feature/social-preview-card
