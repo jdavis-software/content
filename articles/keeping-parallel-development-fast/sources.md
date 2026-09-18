@@ -19,5 +19,6 @@
 - [Temporal persistence](https://docs.temporal.io/temporal-service/persistence) — Temporal Service-owned execution/history persistence, distinct from a worker build artifact.
 - [Temporal Go testing and replay](https://docs.temporal.io/develop/go/testing-suite) — Representative-history replay as compatibility evidence for Workflow Definition changes.
 - [Docker build practices and image pinning](https://docs.docker.com/build/building/best-practices/#pin-base-image-versions) — Moving tags versus fixed image digests and explicit update responsibility.
+- [SQLite FTS5 full-text search](https://www.sqlite.org/fts5.html) — Optional local full-text indexing of selected documents; lexical queries and rebuild from retained content, not automatic vector search or application authority.
 
 Checked September 17, 2026. Source documentation supports mechanisms, not personal performance claims. The Dockerfile is an illustrative fragment; Docker/PostgreSQL/Temporal integration tests were not executed for this article. The separately supplied Go probe was executed locally and does not measure delivery speed. No private project or customer material is included.

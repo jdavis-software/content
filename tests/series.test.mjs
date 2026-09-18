@@ -21,7 +21,7 @@ async function status(dir,slug,status){const file=path.join(dir,'articles',slug,
 async function html(dir,slug){return readFile(path.join(dir,'dist/articles',slug,'index.html'),'utf8');}
 test('second article validates with an evidence ledger and an unchanged original PNG',async()=>{
  const pkg=await loadPackage(root,second);assert.deepEqual(await validatePackage(pkg,await configAt(root)),[]);
- assert.equal(pkg.sources.length,19);assert.ok(pkg.article.includes('not a PostgreSQL integration test or a performance benchmark'));
+ assert.equal(pkg.sources.length,20);assert.ok(pkg.article.includes('not a PostgreSQL integration test or a performance benchmark'));
  const image=await readFile(path.join(pkg.dir,pkg.meta.socialImage.path));
  assert.equal(hash(image),'519ffa6191cfa134e57613e40cd08dd746f34dab732a67cfeaa17aa9f973e680');
  assert.deepEqual(rasterInfo(image),{width:1734,height:907,type:'image/png'});
@@ -73,4 +73,17 @@ test('the second LinkedIn handoff is a draft pointing to the correct new URL',as
  assert.equal(request.approval,null);assert.equal(request.state,'awaiting-human-approval');
  assert.equal(request.articleUrl,`https://jdavis-software.github.io/content/articles/${second}/`);
  assert.ok(request.text.includes(request.articleUrl));assert.ok(!request.text.includes('{{articleUrl}}'));
+});
+
+
+test('database roles distinguish durable ownership from optional document-derived indexing',async t=>{
+  const dir=await fixture(t);await build(dir);
+  const body=await html(dir,second);
+  assert.match(body,/id="not-every-database-is-another-source-of-truth"/);
+  for(const label of ['Application PostgreSQL','Temporal-owned PostgreSQL persistence','Optional SQLite FTS index','Build caches'])assert.ok(body.includes(label));
+  assert.ok(body.includes('approved documents → a versioned knowledge package → an optional SQLite index'));
+  assert.ok(body.includes('Temporal persistence is not a replica derived from application rows'));
+  assert.ok(body.includes('The SQLite index is optional too'));
+  assert.ok(body.includes('https://www.sqlite.org/fts5.html'));
+  assert.ok(body.indexOf('id="not-every-database-is-another-source-of-truth"')<body.indexOf('id="application-data-invalidation-is-a-different-problem"'));
 });
