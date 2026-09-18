@@ -1,5 +1,35 @@
 {
-  "cover": {"file":"cover.svg","method":"original-code-authored-vector","generatedByModel":false,"description":"Illustrative worktree and validation graph, not vendor branding or benchmark data."},
-  "gptImage": {"status":"not-run","reason":"The pilot uses an editable diagrammatic cover. A host-driven GPT Image brief is included for a later optional image pass."},
-  "animatedInfographic": {"status":"not-run","reason":"Specialist plugin remains an explicit optional production pass; no animation export is claimed."}
+  "cover": {
+    "file": "cover.svg",
+    "method": "original-code-authored-vector",
+    "generatedByModel": false,
+    "description": "Illustrative worktree and validation graph, not vendor branding or benchmark data."
+  },
+  "gptImage": {
+    "status": "completed",
+    "method": "ChatGPT image generation",
+    "modelVersion": "not exposed by the host",
+    "file": "og-parallel-agents-v1.png",
+    "originalDimensions": [
+      1536,
+      1024
+    ],
+    "crop": [
+      0,
+      110,
+      1536,
+      913
+    ],
+    "outputDimensions": [
+      1200,
+      627
+    ],
+    "processing": "Center crop, Lanczos resize, optimized RGB PNG; no EXIF metadata.",
+    "sha256": "45869bd494411d7c05298b3e1f106e0010711277a037b70b56c3e48184453156",
+    "purpose": "Editorial social-preview illustration; not benchmark data, a live system diagram, or vendor branding."
+  },
+  "animatedInfographic": {
+    "status": "not-run",
+    "reason": "Specialist plugin remains an explicit optional production pass; no animation export is claimed."
+  }
 }

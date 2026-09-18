@@ -1,6 +1,6 @@
 # Animated agent-flow diagram
 
-The parallel-agent article replaces its static on-page cover illustration with an authored HTML/SVG diagram. The existing cover asset remains the social-metadata image. The component is an illustrative model, not a live graph, benchmark, connected agent dashboard or claim that workers ran.
+The parallel-agent article replaces its static on-page cover illustration with an authored HTML/SVG diagram. A dedicated raster `socialImage` supplies social metadata and the homepage thumbnail; it does not replace this interactive diagram. The component is an illustrative model, not a live graph, benchmark, connected agent dashboard or claim that workers ran.
 
 ## Controls and accessibility
 

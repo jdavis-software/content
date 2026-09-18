@@ -21,5 +21,12 @@
   "coverAlt": "Independent engineering workstreams converging at a shared validation gate",
   "sourceType": "mixed",
   "publishedUrl": null,
-  "featured": true
+  "featured": true,
+  "socialImage": {
+    "path": "assets/og-parallel-agents-v1.png",
+    "alt": "Engineering for parallel agents: one contract branches into three isolated worktrees, then converges through validation into a release.",
+    "width": 1200,
+    "height": 627,
+    "type": "image/png"
+  }
 }
