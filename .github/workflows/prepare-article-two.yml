@@ -1,0 +1,19 @@
+name: Prepare article two source
+on:
+  push:
+    branches: [article/keeping-parallel-development-fast]
+    paths: [.github/workflows/prepare-article-two.yml]
+permissions:
+  contents: read
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - run: git archive --format=zip HEAD -o /tmp/article-two-source.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: article-two-source
+          path: /tmp/article-two-source.zip
+          retention-days: 2
