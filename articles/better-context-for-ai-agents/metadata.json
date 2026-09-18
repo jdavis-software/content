@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "title": "AI Agents Don’t Need the Entire Codebase. They Need the Right Context.",
+  "description": "Task-specific evidence, semantic navigation, current worktrees, and inspectable context packets—without mistaking more text for better understanding.",
+  "slug": "better-context-for-ai-agents",
+  "status": "published",
+  "publicSafe": true,
+  "author": "Jordan Davis",
+  "category": "Agent context",
+  "createdAt": "2026-09-17",
+  "updatedAt": "2026-09-17",
+  "tags": ["Agentic AI", "Architecture", "TypeScript", "Go", "Developer Tools"],
+  "coverImage": "assets/og-context-v1.png",
+  "coverAlt": "Right context. Not more noise. Decisions, symbols, contracts, and tests form a scoped task packet.",
+  "coverWidth": 1200,
+  "coverHeight": 627,
+  "coverCaption": "Editorial illustration. The context explorer uses fictional evidence, not a live repository or model benchmark.",
+  "sourceType": "mixed",
+  "publishedUrl": null,
+  "featured": true,
+  "seriesOrder": 3,
+  "socialImage": {"path": "assets/og-context-v1.png", "width": 1200, "height": 627, "alt": "AI agents need the right context: selected decisions, symbols, contracts, and tests in an inspectable task packet."}
+}

@@ -1,0 +1,57 @@
+name: Prepare and verify context article
+on:
+  push:
+    branches: [article/better-context-for-ai-agents]
+    paths: [.github/workflows/prepare-context-article.yml]
+permissions:
+  contents: write
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Apply exact integration edits and import inspected editorial PNG
+        run: |
+          python3 - <<'PY'
+          import hashlib, json, pathlib, struct, urllib.request
+          ops=json.loads(r'''[{"path":"README.md","before":"2f22ebdf9268067d80530c36f27e64acc5b73b7ed7e7abbeb9d1b3b860296004","edits":[[2260,2260,"/)\n\n3. [AI Agents Don’t Need the Entire Codebase. They Need the Right Context.](https://jdavis-software.github.io/content/articles/better-context-for-ai-agents"]],"after":"097dd79d8d6bc0fcb4c72e0f71975619388af7ab183e8ffa8d0a95183ad6247a"},{"path":"lib/site.mjs","before":"b32b8fbe6c90510d6c5678cbb41970ab43e1972acae425a5ffd00984a39acdda","edits":[[0,0,"import {insertContextExplorer} from './context-explorer.mjs';\n"],[2976,2976,".js\"></script>` : ''}${article?.slug === 'better-context-for-ai-agents' ? `<link rel=\"stylesheet\" href=\"${base}/context-explorer.css\"><script type=\"module\" src=\"${base}/context-explorer"],[8823,8823,"'});\n  }\n  if(p.slug==='better-context-for-ai-agents') {\n    rendered.html=insertContextExplorer(rendered.html);\n    const at=rendered.toc.findIndex(h=>h.id==='choose-retrieval-by-the-question');\n    rendered.toc.splice(at,0,{id:'context-title',text:'Interactive: inspect the packet"],[18663,18663,"if(visible.some(p=>p.slug==='better-context-for-ai-agents')) {\n    for(const file of ['context-explorer.css','context-explorer.js','context-model.js'])\n      await put(file,await readFile(path.join(root,'site',file)));\n  }\n  "]],"after":"bba470094ba48057053ab748bf7e70be493595995707df6317ca4ff8702a5fc5"},{"path":"lib/content.mjs","before":"e2b9d87292ea1cce2ee1d78d710dc297587d121375485ae387c6ebb4d5a5714f","edits":[[7565,7565,"...(pkg.slug==='better-context-for-ai-agents'?['lib/context-explorer.mjs','site/context-model.js','site/context-explorer.js','site/context-explorer.css']:[]),"]],"after":"9fa95e89a538de5ae7ea9a8c7a63e4bbb0711958974d94fb7c77ff464ff155f0"},{"path":"scripts/verify-publication.py","before":"bb836b6eb98344a7548fed5e9d97a55000ede27096e1099a84daab5857b5b1b5","edits":[[2929,2929,"if meta['slug'] in ['parallel-agent-engineering','keeping-parallel-development-fast']:\n            "],[2963,2963," in body\n        if meta['slug'] == 'better-context-for-ai-agents':\n            assert b'id=\"context-packet-explorer\"' in body\n            assert b'Declared requirements satisfied' in body\n            assert b'fictional' in body\n            assert b'id=\"devops-invalidation\"' not"],[3946,3946,"context-model.js','context-explorer.js','context-explorer.css','"]],"after":"6651888a9d703cb18a8048f0ee96bb9a8bc9a4181680641a9789057a53dbd088"}]''')
+          for op in ops:
+              p=pathlib.Path(op['path'])
+              assert hashlib.sha256(p.read_bytes()).hexdigest()==op['before'], 'Base changed: '+str(p)
+              text=p.read_text()
+              for start,end,replacement in reversed(op['edits']):
+                  text=text[:start]+replacement+text[end:]
+              assert hashlib.sha256(text.encode()).hexdigest()==op['after'], 'Unexpected integration output: '+str(p)
+              p.write_text(text)
+          a=pathlib.Path('articles/better-context-for-ai-agents')
+          for name in ['metadata.json','sources.json','assets/provenance.json']:
+              p=a/name;p.write_text(json.dumps(json.loads(p.read_text()),indent=2,ensure_ascii=False)+'\n')
+          sources=json.loads((a/'sources.json').read_text())
+          (a/'sources.md').write_text('# Public references\n\n'+'\n'.join(f'- [{s["title"]}]({s["url"]}) — {s["supports"]}' for s in sources)+'\n\nThe context-pack architecture is the author’s proposed design. The interactive example is a public, fictional, deterministic model with manually declared requirements; it is not a live context service or a model-performance experiment.\n')
+          url='https://d2ol7oe51mr4n9.cloudfront.net/user_3GItM2y2AvmPfI5GF1fDy6mhorh/8cb39a1e-7b3f-4648-b883-f259060d3805.png'
+          with urllib.request.urlopen(url,timeout=30) as response:
+              data=response.read(5242881)
+          assert len(data)<5242880
+          assert hashlib.sha256(data).hexdigest()=='5e356fdb67d5abf9b5dcb2150239550ce959ad0ff8bfb2e87ba4b8402a65e24e'
+          assert data[:8]==b'\x89PNG\r\n\x1a\n'
+          assert struct.unpack('>II',data[16:24])==(1200,627)
+          (a/'assets/og-context-v1.png').write_bytes(data)
+          print('Verified integration sources and 1200x627 editorial PNG')
+          PY
+      - run: npm run check
+      - run: node examples/context-packet/verify.mjs
+      - name: Save tested source without changing publishing permissions
+        run: |
+          git add README.md articles/better-context-for-ai-agents examples/context-packet lib/content.mjs lib/site.mjs lib/context-explorer.mjs scripts/verify-publication.py site/context-model.js site/context-explorer.js site/context-explorer.css tests/context-packet.test.mjs
+          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'feat: assemble context article, evidence explorer, and verified social image'
+          git push origin HEAD:article/better-context-for-ai-agents
+          git archive --format=zip HEAD -o /tmp/context-article-source.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: context-article-source
+          path: /tmp/context-article-source.zip
+          retention-days: 2
