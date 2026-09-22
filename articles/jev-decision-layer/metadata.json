@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "title": "Jev: The Decision Layer Emerging Inside AI Agents",
-  "description": "How developers are using Jev for browser actions, context filtering, UI composition, and graph traversal\u2014and where generation, permissions, and verification still belong.",
+  "description": "How developers are using Jev for browser actions, context filtering, UI composition, and graph traversal—and where generation, permissions, and verification still belong.",
   "slug": "jev-decision-layer",
   "status": "published",
   "publicSafe": true,
@@ -9,20 +9,14 @@
   "category": "Agent architecture",
   "createdAt": "2026-09-22",
   "updatedAt": "2026-09-22",
-  "tags": [
-    "Agentic AI",
-    "Jev",
-    "TypeSafe",
-    "Developer Tools",
-    "Architecture"
-  ],
+  "tags": ["Agentic AI", "Jev", "TypeSafe", "Developer Tools", "Architecture"],
   "coverImage": "assets/og-jev-v1.png",
   "coverAlt": "Jev: the decision layer emerging inside AI agents. Observe, decide, check, act.",
   "coverWidth": 1200,
   "coverHeight": 627,
   "coverCaption": "Editorial artwork. The decision-flow example below uses authored scenarios, not live Jev responses.",
   "sourceType": "mixed",
-  "publishedUrl": null,
+  "publishedUrl": "https://jdavis-software.github.io/content/articles/jev-decision-layer/",
   "featured": true,
   "seriesOrder": 4,
   "socialImage": {
