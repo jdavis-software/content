@@ -1,0 +1,19 @@
+name: Prepare Jev article source
+on:
+  push:
+    branches: [article/jev-decision-layer]
+    paths: [.github/workflows/jev-source-snapshot.yml]
+permissions:
+  contents: read
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - run: git archive --format=zip HEAD -o /tmp/jev-source.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: jev-source
+          path: /tmp/jev-source.zip
+          retention-days: 2
