@@ -11,7 +11,7 @@ import {loadPackage,validatePackage,configAt,fingerprints,hash} from '../lib/con
 import {rasterInfo} from '../lib/social-image.mjs';
 import {prepare} from '../lib/publishing.mjs';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..'),slug='better-context-for-ai-agents';
-async function fixture(t){const d=await mkdtemp(path.join(tmpdir(),'context-packet-'));t.after(()=>rm(d,{recursive:true,force:true}));for(const name of ['articles','lib','site','studio.config.json'])await cp(path.join(root,name),path.join(d,name),{recursive:true});return d;}
+async function fixture(t){const d=await mkdtemp(path.join(tmpdir(),'context-packet-'));t.after(()=>rm(d,{recursive:true,force:true}));for(const name of ['articles','lib','site','studio.config.json'])await cp(path.join(root,name),path.join(d,name),{recursive:true});for(const entry of await readdir(path.join(d,'articles')))if(!['parallel-agent-engineering','keeping-parallel-development-fast',slug].includes(entry))await rm(path.join(d,'articles',entry),{recursive:true,force:true});return d;}
 async function status(dir,id,status){const f=path.join(dir,'articles',id,'metadata.json'),m=JSON.parse(await readFile(f,'utf8'));m.status=status;await writeFile(f,JSON.stringify(m));}
 const article=(d,id=slug)=>readFile(path.join(d,'dist/articles',id,'index.html'),'utf8');
 test('focused packet satisfies exactly five declared evidence requirements',()=>{const s=inspectPacket(makePacket());assert.equal(s.current,5);assert.equal(s.ready,true);assert.equal(s.selected,5);assert.equal(s.optional,0);});

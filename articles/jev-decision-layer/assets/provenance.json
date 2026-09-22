@@ -1,0 +1,20 @@
+{
+  "cover": {
+    "file": "og-jev-v1.png",
+    "generationId": "4ead9c63-8ca4-4904-933c-3e54d85cd430",
+    "tool": "image_gen",
+    "model": "not exposed by host",
+    "processing": "Central generated Jev artwork cropped from 1024x1536 source, with deterministic editorial typography and layout. Unrelated mock page, avatar, and claims excluded.",
+    "dimensions": [
+      1200,
+      627
+    ],
+    "sha256": "5f5c55c1b54c329c87d1143a47fc3a45d4c72030c00a2af4beb32bcef2594d32",
+    "role": "Editorial illustration, not benchmark evidence or a product screenshot."
+  },
+  "interactive": {
+    "method": "Original authored HTML, CSS, and JavaScript",
+    "liveModel": false,
+    "measurements": false
+  }
+}
