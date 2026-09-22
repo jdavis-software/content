@@ -1,0 +1,59 @@
+name: Assemble Jev article
+on:
+  push:
+    branches: [article/jev-decision-layer]
+    paths: [.github/workflows/prepare-jev-article.yml]
+permissions:
+  contents: write
+jobs:
+  article:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Import the exact locally tested publication package
+        run: |
+          python3 - <<'PY'
+          import hashlib, io, json, pathlib, urllib.request, zipfile
+          url = 'https://d2ol7oe51mr4n9.cloudfront.net/user_3GItM2y2AvmPfI5GF1fDy6mhorh/150403f3-f3ec-449e-8006-904450100550.zip'
+          with urllib.request.urlopen(url, timeout=30) as response:
+              data = response.read(1048577)
+          assert len(data) <= 1048576
+          assert hashlib.sha256(data).hexdigest() == '83f86103246211fc75cfe8eafa4d04b17112693d337ba48a190fb08116a439ed'
+          allowed = {'README.md','articles/jev-decision-layer/article.md','articles/jev-decision-layer/assets/og-jev-v1.png','articles/jev-decision-layer/assets/provenance.json','articles/jev-decision-layer/linkedin.md','articles/jev-decision-layer/metadata.json','articles/jev-decision-layer/sources.json','articles/jev-decision-layer/sources.md','docs/JEV-ARTICLE.md','lib/content.mjs','lib/jev-explorer.mjs','lib/site.mjs','scripts/verify-publication.py','site/jev-explorer.css','site/jev-explorer.js','site/jev-model.js','tests/context-packet.test.mjs','tests/jev-article.test.mjs'}
+          with zipfile.ZipFile(io.BytesIO(data)) as archive:
+              manifest = json.loads(archive.read('manifest.json'))
+              assert manifest['schemaVersion'] == 1
+              assert manifest['baseRef'] == '99804c3e192d90f578626b3a5ff9c52259cc538d'
+              assert {item['path'] for item in manifest['files']} == allowed
+              assert len(manifest['files']) == len(allowed)
+              prepared = []
+              for item in manifest['files']:
+                  dest = pathlib.Path(item['path'])
+                  assert not dest.is_symlink()
+                  if item['beforeSha256'] is None:
+                      assert not dest.exists(), 'Unexpected existing file: ' + str(dest)
+                  else:
+                      assert hashlib.sha256(dest.read_bytes()).hexdigest() == item['beforeSha256'], 'Base changed: ' + str(dest)
+                  content = archive.read('files/' + item['path'])
+                  assert hashlib.sha256(content).hexdigest() == item['sha256'], 'Content mismatch: ' + str(dest)
+                  prepared.append((dest, content))
+              for dest, content in prepared:
+                  dest.parent.mkdir(parents=True, exist_ok=True)
+                  dest.write_bytes(content)
+              pathlib.Path('/tmp/jev-files.json').write_text(json.dumps(sorted(allowed)))
+          print('All 18 publication files match the locally tested package')
+          PY
+      - run: npm run check
+      - name: Commit only the tested publication files
+        run: |
+          python3 - <<'PY'
+          import json, subprocess
+          files = json.load(open('/tmp/jev-files.json'))
+          subprocess.run(['git','add','--',*files],check=True)
+          subprocess.run(['git','-c','user.name=github-actions[bot]','-c','user.email=41898282+github-actions[bot]@users.noreply.github.com','commit','-m','feat: add researched Jev article and illustrative decision explorer'],check=True)
+          subprocess.run(['git','push','origin','HEAD:article/jev-decision-layer'],check=True)
+          PY
