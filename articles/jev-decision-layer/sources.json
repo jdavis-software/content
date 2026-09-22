@@ -1,0 +1,274 @@
+[
+  {
+    "id": "S01",
+    "title": "TypeSafe's announcement",
+    "url": "https://typesafe.ai/blog/introducing-system-one-models-and-jev",
+    "supports": "September 15 launch, structured-decision architecture, and explicitly attributed speed/cost headline with vendor caveats.",
+    "type": "primary",
+    "checkedAt": "2026-09-22"
+  },
+  {
+    "id": "S02",
+    "title": "Introduction",
+    "url": "https://docs.typesafe.ai/introduction",
+    "supports": "State and independently evaluated typed questions; atomic judgments composed in code.",
+    "type": "primary",
+    "checkedAt": "2026-09-22"
+  },
+  {
+    "id": "S03",
+    "title": "Choice",
+    "url": "https://docs.typesafe.ai/primitives/choice",
+    "supports": "Highest-probability option, distribution, and bounded candidate choices.",
+    "type": "primary",
+    "checkedAt": "2026-09-22"
+  },
+  {
+    "id": "S04",
+    "title": "Score",
+    "url": "https://docs.typesafe.ai/primitives/score",
+    "supports": "Probability-weighted position on ordered described levels, not a measured business quantity.",
+    "type": "primary",
+    "checkedAt": "2026-09-22"
+  },
+  {
+    "id": "S05",
+    "title": "Noul",
+    "url": "https://docs.typesafe.ai/primitives/noul",
+    "supports": "Probability of a yes/no proposition, not an intensity score.",
+    "type": "primary",
+    "checkedAt": "2026-09-22"
+  },
+  {
+    "id": "S06",
+    "title": "Confidence",
+    "url": "https://docs.typesafe.ai/confidence",
+    "supports": "Choice/Score confidence differs from outcome probability; Noul has no separate confidence field.",
+    "type": "primary",
+    "checkedAt": "2026-09-22"
+  },
+  {
+    "id": "S07",
+    "title": "Hanako",
+    "url": "https://x.com/hanakoxbt/status/2102144518309265853",
+    "supports": "User-supplied post summary informs routing discussion; original video not independently inspected.",
+    "type": "user-supplied-post",
+    "checkedAt": "2026-09-22"
+  },
+  {
+    "id": "S08",
+    "title": "neo4jev",
+    "url": "https://github.com/jexp/neo4jev",
+    "supports": "Classifying outgoing Neo4j relationships for graph traversal.",
+    "type": "primary",
+    "checkedAt": "2026-09-22"
+  },
+  {
+    "id": "S09",
+    "title": "Browser Use's jev-ultrafast",
+    "url": "https://github.com/browser-use/jev-ultrafast",
+    "supports": "Observed browser controls, typed action/target selection, separate text helper, freshness checks, and documented limitations.",
+    "type": "primary",
+    "checkedAt": "2026-09-22"
+  },
+  {
+    "id": "S10",
+    "title": "agent-desktop",
+    "url": "https://github.com/lahfir/agent-desktop",
+    "supports": "Accessibility-based desktop control foundation, distinct from Jev perception.",
+    "type": "primary",
+    "checkedAt": "2026-09-22"
+  },
+  {
+    "id": "S11",
+    "title": "fast-jev-compaction",
+    "url": "https://github.com/tamaratran/fast-jev-compaction",
+    "supports": "Call/result retention, pinned material, failure handling, and explicitly scripted SwiftUI demonstration.",
+    "type": "primary",
+    "checkedAt": "2026-09-22"
+  },
+  {
+    "id": "S12",
+    "title": "Winnow",
+    "url": "https://github.com/GhalebDweikat/winnow",
+    "supports": "Filtering tool-result blocks before context entry with originals retained for recall.",
+    "type": "primary",
+    "checkedAt": "2026-09-22"
+  },
+  {
+    "id": "S13",
+    "title": "json-render Jev integration",
+    "url": "https://json-render.dev/docs/jev",
+    "supports": "Experimental, unreleased Jev UI composition from configured candidates; action execution remains separate.",
+    "type": "primary",
+    "checkedAt": "2026-09-22"
+  },
+  {
+    "id": "S14",
+    "title": "jev-review",
+    "url": "https://github.com/devagrawal09/jev-review",
+    "supports": "Experimental staged review triage; findings are review prompts, not defect proof.",
+    "type": "primary",
+    "checkedAt": "2026-09-22"
+  },
+  {
+    "id": "S15",
+    "title": "Canny",
+    "url": "https://github.com/qkal/Canny",
+    "supports": "Deterministic evidence hooks with advisory model judgments for completion.",
+    "type": "primary",
+    "checkedAt": "2026-09-22"
+  },
+  {
+    "id": "S16",
+    "title": "pg-jev",
+    "url": "https://github.com/realZachi/pg-jev",
+    "supports": "External semantic judgments over PostgreSQL rows for filtering, ranking, and classification.",
+    "type": "primary",
+    "checkedAt": "2026-09-22"
+  },
+  {
+    "id": "S17",
+    "title": "jev-curate",
+    "url": "https://github.com/AkashPriyadarshii/jev-curate",
+    "supports": "Streaming dataset screening with typed judgments; project throughput not reproduced.",
+    "type": "primary",
+    "checkedAt": "2026-09-22"
+  },
+  {
+    "id": "S18",
+    "title": "typesafe-mario",
+    "url": "https://github.com/fhshaik/typesafe-mario",
+    "supports": "Action selection from structured emulator state, not native video input.",
+    "type": "primary",
+    "checkedAt": "2026-09-22"
+  },
+  {
+    "id": "S19",
+    "title": "OneVOneJev",
+    "url": "https://github.com/emrickgarrett/OneVOneJev",
+    "supports": "Upstream project description of OneVOneJev; source review only, no installation, execution, or reproduced performance.",
+    "type": "primary",
+    "checkedAt": "2026-09-22"
+  },
+  {
+    "id": "S20",
+    "title": "jev-drone",
+    "url": "https://github.com/RomanSlack/jev-drone",
+    "supports": "MuJoCo simulation separates perception, tactical judgment, conventional control, and safety.",
+    "type": "primary",
+    "checkedAt": "2026-09-22"
+  },
+  {
+    "id": "S21",
+    "title": "AJ's agentrun() post",
+    "url": "https://x.com/_aj/status/2102061534956662818",
+    "supports": "User-supplied text and screenshot support attribution of harness-level savings, not independent reproduction or confirmed 100,000-alert trial.",
+    "type": "user-supplied-post",
+    "checkedAt": "2026-09-22"
+  },
+  {
+    "id": "S22",
+    "title": "Model customization",
+    "url": "https://docs.typesafe.ai/models",
+    "supports": "Jev 1.13.0 pricing and text modality as checked September 22; shared weights and moving aliases.",
+    "type": "primary",
+    "checkedAt": "2026-09-22"
+  },
+  {
+    "id": "S23",
+    "title": "speculative fan-out pattern",
+    "url": "https://docs.typesafe.ai/patterns/fan-out",
+    "supports": "Speculative question evaluation differs from execution of all proposed branches.",
+    "type": "primary",
+    "checkedAt": "2026-09-22"
+  },
+  {
+    "id": "S24",
+    "title": "evaluation methodology",
+    "url": "https://evals.typesafe.ai/",
+    "supports": "Workflow evaluation design and model-derived reference probabilities; not independent business-ground-truth testing.",
+    "type": "primary",
+    "checkedAt": "2026-09-22"
+  },
+  {
+    "id": "S25",
+    "title": "Jev 1.13 limitations",
+    "url": "https://docs.typesafe.ai/model-jaggedness/jev-1.13",
+    "supports": "Numerical, context, adversarial, and cross-question limitations; typed output is not guaranteed semantic truth.",
+    "type": "primary",
+    "checkedAt": "2026-09-22"
+  },
+  {
+    "id": "S26",
+    "title": "Charlie Hills",
+    "url": "https://x.com/charliejhills/status/2101957500669169711",
+    "supports": "User-supplied twenty-project list is the discovery source; upstream descriptions separately reviewed.",
+    "type": "user-supplied-post",
+    "checkedAt": "2026-09-22"
+  },
+  {
+    "id": "S27",
+    "title": "typesafe-mcp",
+    "url": "https://github.com/itsmostafa/typesafe-mcp",
+    "supports": "Upstream project description of typesafe-mcp; source review only, no installation, execution, or reproduced performance.",
+    "type": "primary",
+    "checkedAt": "2026-09-22"
+  },
+  {
+    "id": "S28",
+    "title": "jev-mcp",
+    "url": "https://github.com/jkudish/jev-mcp",
+    "supports": "Upstream project description of jev-mcp; source review only, no installation, execution, or reproduced performance.",
+    "type": "primary",
+    "checkedAt": "2026-09-22"
+  },
+  {
+    "id": "S29",
+    "title": "SemDecide",
+    "url": "https://github.com/sharziki/semdecide",
+    "supports": "Upstream project description of SemDecide; source review only, no installation, execution, or reproduced performance.",
+    "type": "primary",
+    "checkedAt": "2026-09-22"
+  },
+  {
+    "id": "S30",
+    "title": "jev-codex-router",
+    "url": "https://github.com/0xNatoshi/jev-codex-router",
+    "supports": "Upstream project description of jev-codex-router; source review only, no installation, execution, or reproduced performance.",
+    "type": "primary",
+    "checkedAt": "2026-09-22"
+  },
+  {
+    "id": "S31",
+    "title": "Blink",
+    "url": "https://github.com/ellipsis-dev/blink",
+    "supports": "Upstream project description of Blink; source review only, no installation, execution, or reproduced performance.",
+    "type": "primary",
+    "checkedAt": "2026-09-22"
+  },
+  {
+    "id": "S32",
+    "title": "jev-trader",
+    "url": "https://github.com/jarrodwatts/jev-trader",
+    "supports": "Per-block trading prototype; mock and dry-run modes are not evidence of profitable HFT.",
+    "type": "primary",
+    "checkedAt": "2026-09-22"
+  },
+  {
+    "id": "S33",
+    "title": "Prism",
+    "url": "https://github.com/irfndi/prism-liquidity-agent/commit/22c67bdbe30bab608226832256a5013ad826b707",
+    "supports": "Pinned optional stress-sizing change is paper-only and disabled by default.",
+    "type": "primary",
+    "checkedAt": "2026-09-22"
+  },
+  {
+    "id": "S34",
+    "title": "killmyidea",
+    "url": "https://github.com/monteduro/killmyidea",
+    "supports": "Upstream project description of killmyidea; source review only, no installation, execution, or reproduced performance.",
+    "type": "primary",
+    "checkedAt": "2026-09-22"
+  }
+]
