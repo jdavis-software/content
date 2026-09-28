@@ -1,0 +1,35 @@
+name: Prepare approved colorful cover
+on:
+  push:
+    branches: [fix/loops-color-cover]
+    paths: [.github/workflows/prepare-color-cover.yml]
+permissions:
+  contents: write
+jobs:
+  cover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Decode the approved image once
+        run: |
+          python -m pip install --disable-pip-version-check Pillow==11.3.0
+          python .github/cover-transfer/prepare.py
+      - run: npm run check
+      - name: Commit only the cover, metadata, provenance, and image regression check
+        run: |
+          git add articles/loops-inside-graphs/assets/og-loops-graphs-v2.png articles/loops-inside-graphs/metadata.json articles/loops-inside-graphs/assets/provenance.json tests/loop-graph.test.mjs
+          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'assets: replace green loop-graph cover with approved colorful artwork'
+          git push origin HEAD:fix/loops-color-cover
+          git archive --format=zip HEAD -o /tmp/color-cover-review.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: color-cover-review
+          path: /tmp/color-cover-review.zip
+          retention-days: 2
