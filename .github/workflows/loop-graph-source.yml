@@ -1,0 +1,19 @@
+name: Prepare loop and graph article source
+on:
+  push:
+    branches: [article/loops-inside-graphs]
+    paths: [.github/workflows/loop-graph-source.yml]
+permissions:
+  contents: read
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - run: git archive --format=zip HEAD -o /tmp/loop-graph-source.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: loop-graph-source
+          path: /tmp/loop-graph-source.zip
+          retention-days: 2
