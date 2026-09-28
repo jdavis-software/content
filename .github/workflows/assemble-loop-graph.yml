@@ -1,0 +1,74 @@
+name: Assemble loop and graph article
+on:
+  push:
+    branches: [article/loops-inside-graphs]
+    paths: [.github/workflows/assemble-loop-graph.yml]
+permissions:
+  contents: write
+jobs:
+  article:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Apply the exact locally tested integration edits
+        run: |
+          python3 - <<'PY'
+          import hashlib, json, pathlib
+          ops=json.loads(r'''[{"path":"README.md","before":"23ea02db546e7150b8dcdc7f3d9d78095a90729108f56c018526be72c79b52dc","after":"9ef97c36934562473137fa3fd8ee9e9793c531f01c0bc6a510916426d3098848","edits":[[2546,2546,"/)\n5. [Loops Inside Graphs: How I Structure Reliable Agent Workflows](https://jdavis-software.github.io/content/articles/loops-inside-graphs"]]},{"path":"lib/content.mjs","before":"85a6ced17b9d988d06951842fd0d42d5a233aa3e7b2a05588e1d97b3e596c21d","after":"48efa030b0cde5c455340d35e7f89f108a62a964cf3e9dfe7037996806d531e9","edits":[[7581,7581,"loops-inside-graphs'?['lib/loop-graph-explorer.mjs','site/loop-graph-model.js','site/loop-graph-explorer.js','site/loop-graph-explorer.css']:[]),...(pkg.slug==='"]]},{"path":"lib/site.mjs","before":"e8184509d57dbf91e965032a92ddf8d4a53343b420c4a56be7727eb69d357d3c","after":"84bc06030e1b8164a643000cf090097a5994bbd5fdbd24c3565209a142e26fba","edits":[[0,0,"import {insertLoopGraphExplorer} from './loop-graph-explorer.mjs';\n"],[3435,3435,"-explorer.js\"></script>` : ''}${article?.slug === 'loops-inside-graphs' ? `<link rel=\"stylesheet\" href=\"${base}/loop-graph-explorer.css\"><script type=\"module\" src=\"${base}/loop-graph"],[9584,9584,"if(p.slug==='loops-inside-graphs'){\n    rendered.html=insertLoopGraphExplorer(rendered.html);\n    const at=rendered.toc.findIndex(h=>h.id==='the-join-is-an-engineering-decision');\n    rendered.toc.splice(at,0,{id:'loop-graph-explorer',text:'Interactive: local repair and shared gates'});\n  }\n  "],[11245,11245,"p.slug==='loops-inside-graphs'?'Primary technical references, a separately identified editorial source, and one unavailable X discovery link. Authored examples are not benchmark evidence.':"],[20288,20288,"if(visible.some(p=>p.slug==='loops-inside-graphs')){\n    for(const file of ['loop-graph-model.js','loop-graph-explorer.js','loop-graph-explorer.css'])await put(file,await readFile(path.join(root,'site',file)));\n  }\n  "]]},{"path":"scripts/verify-publication.py","before":"623aad93c3dbb2d72ed1aee5738fb05ff6129721b2b2da374bc566933736f8f7","after":"c82988ae9482f136bc55ef8cf0b40c12c37024b519ef34ce5b711fd9aacb8157","edits":[[3099,3099,"loops-inside-graphs':\n            assert b'id=\"loop-graph-explorer\"' in body\n            assert b'Authored illustration only' in body\n            assert b'The join is an engineering decision' in body\n            assert b'not a newly verified Andrew Ng PDF' in body\n        if meta['slug'] == '"],[4664,4664,"loop-graph-model.js','loop-graph-explorer.js','loop-graph-explorer.css','"]]},{"path":"tests/jev-article.test.mjs","before":"49dd03d693fdb2792d5a7c7ea758379bcf13d3b3b0ba5828c7f233dd421c83df","after":"135408a4c35c657b7e9e6a261b558811ce0dfe5710073df08f0d79b0497b2353","edits":[[902,902,"e:true});for(const entry of await readdir(path.join(d,'articles')))if(!['parallel-agent-engineering','keeping-parallel-development-fast','better-context-for-ai-agents',slug].includes(entry))await rm(path.join(d,'articles',entry),{recursive:true,forc"]]}]''')
+          for op in ops:
+              p=pathlib.Path(op['path'])
+              assert hashlib.sha256(p.read_bytes()).hexdigest()==op['before'], 'Base changed: '+str(p)
+              text=p.read_text()
+              for start,end,replacement in reversed(op['edits']):
+                  text=text[:start]+replacement+text[end:]
+              assert hashlib.sha256(text.encode()).hexdigest()==op['after'], 'Unexpected output: '+str(p)
+              p.write_text(text)
+          article=pathlib.Path('articles/loops-inside-graphs')
+          for name in ['metadata.json','sources.json']:
+              p=article/name
+              p.write_text(json.dumps(json.loads(p.read_text()),indent=2,ensure_ascii=False)+'\n')
+          sources=json.loads((article/'sources.json').read_text())
+          text='# Source and attribution record\n\n'+'\n'.join(f'- [{s["title"]}]({s["url"]}) — {s["supports"]}' for s in sources)+'\n\nThe article is original engineering synthesis, not a transcript of the unavailable X post. No purported PDF was inspected. Examples, two-worker event traces, budgets, and outcomes are authored illustrations. No agent benchmark, paid model call, or adoption experiment was run.\n'
+          (article/'sources.md').write_text(text)
+          expected=json.loads('''{"articles/loops-inside-graphs/article.md":"b55492ec3b8bda203fb00fb2ec38edf33caa82c104f7fec231a99c9b00d6062f","articles/loops-inside-graphs/linkedin.md":"b99fc0eb9ef6e542e51bc7ce39528aecf81d92cd8157996613c6349f1a943193","articles/loops-inside-graphs/metadata.json":"7c814114526bb9b5f8036817fdaa047564ca2316fea8be37c8bf486b19f1e75f","articles/loops-inside-graphs/sources.json":"0b03a025e1592ebca676c696fa90e51ae8a8b514ce06974aede537b0d89a1719","articles/loops-inside-graphs/sources.md":"ca737ae819027fd1efe0ac867a39d958f252a766de0a4bf118b842913affaa47","articles/loops-inside-graphs/assets/cover.svg":"110e795c015c0809b909d2b93c124e18640a2090a7940244d12cd4c45c9b6dcd","site/loop-graph-model.js":"596bb16aa7d066fb45e031a4be42aef2dd0b6c2bf55d673e1c5c9e42a8355008","site/loop-graph-explorer.js":"58329c7c8889a9e74facb5bc011d532df5c50d9bcefaa3350283f87daedc4632","site/loop-graph-explorer.css":"d0941b8a9faa62ccfbd4594064ae60ac4b0a5bb255731253e0483b15f2b483e4","lib/loop-graph-explorer.mjs":"5c17a637c6d74b376f1dd90837d3f75ae7055dc2325f10924c19a0cce7aca6bb","tests/loop-graph.test.mjs":"1058078ebcec5c2c3f3a7344e76671aad7797a49e694ad3dc67549e437ea0789","docs/LOOPS-GRAPHS-ARTICLE.md":"8a8f0d53c6c3e31ee69a348dd5e99f97112e44f04e73529ec1a75321f10f6d4f"}''')
+          for name,digest in expected.items():
+              assert hashlib.sha256(pathlib.Path(name).read_bytes()).hexdigest()==digest, 'Prepared source mismatch: '+name
+          print('All article and integration text matches the locally tested source')
+          PY
+      - name: Render the authored SVG once for the publication asset
+        run: |
+          python3 -m pip install --disable-pip-version-check --quiet CairoSVG==2.8.2 Pillow==11.3.0
+          fc-match 'DejaVu Sans'
+          python3 - <<'PY'
+          import hashlib, io, json, pathlib
+          import cairosvg
+          from PIL import Image
+          assets=pathlib.Path('articles/loops-inside-graphs/assets')
+          data=cairosvg.svg2png(bytestring=(assets/'cover.svg').read_bytes(),output_width=1200,output_height=627)
+          image=Image.open(io.BytesIO(data)).convert('RGB')
+          dest=assets/'og-loops-graphs-v1.png'
+          image.save(dest,optimize=True)
+          assert image.size==(1200,627)
+          record={'cover':{'method':'Original authored SVG rendered with CairoSVG; no vendor logos, model imagery, or performance measurements.','source':'cover.svg','file':dest.name,'dimensions':[1200,627],'sha256':hashlib.sha256(dest.read_bytes()).hexdigest()},'interactive':{'method':'Authored state-transition teaching fixture, no external calls','paths':['site/loop-graph-model.js','lib/loop-graph-explorer.mjs','site/loop-graph-explorer.js','site/loop-graph-explorer.css']}}
+          (assets/'provenance.json').write_text(json.dumps(record,indent=2,ensure_ascii=False)+'\n')
+          print('Rendered PNG:',dest.stat().st_size,'bytes',record['cover']['sha256'])
+          PY
+      - run: npm run check
+      - name: Commit only the tested publication and create a review snapshot
+        run: |
+          git add README.md lib/content.mjs lib/site.mjs scripts/verify-publication.py tests/jev-article.test.mjs articles/loops-inside-graphs lib/loop-graph-explorer.mjs site/loop-graph-model.js site/loop-graph-explorer.js site/loop-graph-explorer.css tests/loop-graph.test.mjs docs/LOOPS-GRAPHS-ARTICLE.md
+          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'feat: assemble verified loops-inside-graphs article and social card'
+          git push origin HEAD:article/loops-inside-graphs
+          git archive --format=zip HEAD -o /tmp/loop-graph-review.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: loop-graph-review
+          path: /tmp/loop-graph-review.zip
+          retention-days: 2
