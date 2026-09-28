@@ -16,18 +16,18 @@
     "Go",
     "Orchestration"
   ],
-  "coverImage": "assets/og-loops-graphs-v1.png",
-  "coverAlt": "Two bounded worker loops join under one contract, then pass through integration checks and a separate review gate.",
+  "coverImage": "assets/og-loops-graphs-v2.png",
+  "coverAlt": "Loops Inside Graphs: cyan client and purple API repair loops share an accepted contract, converge at a green compatibility join, and pass to orange integration and separate review.",
   "sourceType": "topic",
   "publishedUrl": "https://jdavis-software.github.io/content/articles/loops-inside-graphs/",
-  "coverWidth": 1200,
-  "coverHeight": 627,
+  "coverWidth": 1672,
+  "coverHeight": 941,
   "coverCaption": "An illustrative control-flow design: local repair stays local; shared changes are checked at the join.",
   "seriesOrder": 5,
   "socialImage": {
-    "path": "assets/og-loops-graphs-v1.png",
-    "width": 1200,
-    "height": 627,
-    "alt": "Loops Inside Graphs — local feedback, explicit handoffs, and compatible results. Engineering Notes by Jordan Davis."
+    "path": "assets/og-loops-graphs-v2.png",
+    "width": 1672,
+    "height": 941,
+    "alt": "Loops Inside Graphs: cyan client and purple API repair loops share an accepted contract, converge at a green compatibility join, and pass to orange integration and separate review."
   }
 }

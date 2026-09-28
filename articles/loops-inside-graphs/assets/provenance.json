@@ -1,13 +1,16 @@
 {
   "cover": {
-    "method": "Original authored SVG rendered with CairoSVG; no vendor logos, model imagery, or performance measurements.",
-    "source": "cover.svg",
-    "file": "og-loops-graphs-v1.png",
+    "method": "User-approved host-generated artwork, optimized through an AVIF transfer and decoded to a self-hosted PNG. Full composition and original dimensions retained; no cropping or regeneration. Re-encoding is lossy, not byte-identical to the original PNG.",
+    "file": "og-loops-graphs-v2.png",
+    "generationId": "2c6b0e58-9541-43a8-b2da-6d422c4bb94d",
     "dimensions": [
-      1200,
-      627
+      1672,
+      941
     ],
-    "sha256": "472c3b4c17ec4861018883c84f91f2192720dcda2dffa804b0d852d7026cf6ba"
+    "originalSha256": "683a1e78e9a89e6d7cbac239210009637250dd1e27acc73bd704d53aa64bb248",
+    "transferSha256": "ca0a14962569d9368a99eae7770eede6aad1bb2f1d9ff2a4c5c78d24394ebe86",
+    "sha256": "5d00f74830c9f5addc0667262223abd9c94e46559c5358639c226701ca872859",
+    "note": "Illustrative artwork, not runtime evidence; the decorative avatar is not a verified portrait. Article copy and interactive implementation are unchanged."
   },
   "interactive": {
     "method": "Authored state-transition teaching fixture, no external calls",
@@ -17,5 +20,17 @@
       "site/loop-graph-explorer.js",
       "site/loop-graph-explorer.css"
     ]
-  }
+  },
+  "previousCovers": [
+    {
+      "method": "Original authored SVG rendered with CairoSVG; no vendor logos, model imagery, or performance measurements.",
+      "source": "cover.svg",
+      "file": "og-loops-graphs-v1.png",
+      "dimensions": [
+        1200,
+        627
+      ],
+      "sha256": "472c3b4c17ec4861018883c84f91f2192720dcda2dffa804b0d852d7026cf6ba"
+    }
+  ]
 }
