@@ -49,6 +49,7 @@ jobs:
         run: |
           python3 - <<'PY'
           import hashlib, pathlib, struct, urllib.request
+          from urllib.parse import urljoin
           from html.parser import HTMLParser
           class Images(HTMLParser):
               def __init__(self):
@@ -63,7 +64,7 @@ jobs:
               assert r.status == 200
               html = r.read().decode()
           parser = Images(); parser.feed(html)
-          assert path in parser.images, 'Article still references old cover'
+          assert base + path in [urljoin(base + route, src) for src in parser.images], 'Article still references old cover'
           assert not any('og-loops-graphs-v1.png' in src for src in parser.images)
           with urllib.request.urlopen(base + path, timeout=20) as r:
               assert r.status == 200 and r.headers.get_content_type() == 'image/png'
