@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="627" viewBox="0 0 1200 627">
+<rect width="1200" height="627" fill="#102b24"/>
+<path d="M540 40V587" stroke="#315146" stroke-width="1"/>
+<g font-family="DejaVu Sans, sans-serif">
+<text x="56" y="61" font-size="14" letter-spacing="3" fill="#a8c9b8">ENGINEERING NOTES / 05</text>
+<g fill="#f6f7f0" font-size="76" font-weight="bold" letter-spacing="-3"><text x="51" y="179">Loops</text><text x="51" y="268">Inside</text><text x="51" y="357">Graphs.</text></g>
+<path d="M56 395h60" stroke="#96d7ab" stroke-width="4"/>
+<g fill="#c2d6cc" font-size="21"><text x="56" y="446">Make repair local.</text><text x="56" y="480">Make handoffs explicit.</text></g>
+<text x="56" y="570" font-size="16" fill="#f6f7f0">Jordan Davis</text>
+<text x="56" y="595" font-size="11" fill="#a8c9b8">SOFTWARE ARCHITECTURE / AGENTIC ENGINEERING</text>
+<rect x="660" y="64" width="400" height="74" rx="10" fill="#1a3b30" stroke="#96d7ab"/>
+<text x="860" y="94" text-anchor="middle" font-size="11" letter-spacing="2" fill="#a8c9b8">CANONICAL INPUT</text>
+<text x="860" y="120" text-anchor="middle" font-size="20" font-weight="bold" fill="#f6f7f0">Accepted contract</text>
+<path d="M860 138v24H696v35M860 162h162v35" fill="none" stroke="#8cb7a0" stroke-width="2"/>
+<path d="m690 190 6 8 6-8m314 0 6 8 6-8" fill="none" stroke="#8cb7a0" stroke-width="2"/>
+<rect x="580" y="202" width="236" height="158" rx="10" fill="#1a3b30" stroke="#527866"/>
+<rect x="898" y="202" width="236" height="158" rx="10" fill="#1a3b30" stroke="#527866"/>
+<g fill="#f6f7f0" text-anchor="middle" font-size="20" font-weight="bold"><text x="698" y="240">Client loop</text><text x="1016" y="240">API loop</text></g>
+<g fill="#c2d6cc" text-anchor="middle" font-size="13"><text x="698" y="275">Implement → Check</text><text x="1016" y="275">Implement → Check</text></g>
+<path d="M772 291v24H624v-24m0 0-5 7m5-7 5 7M1090 291v24H942v-24m0 0-5 7m5-7 5 7" fill="none" stroke="#96d7ab" stroke-width="2"/>
+<g fill="#a8c9b8" text-anchor="middle" font-size="11"><text x="698" y="341">BOUNDED REPAIR</text><text x="1016" y="341">BOUNDED REPAIR</text></g>
+<path d="M698 360v28h162v25M1016 360v28H860" fill="none" stroke="#8cb7a0" stroke-width="2"/>
+<path d="m854 405 6 8 6-8" fill="none" stroke="#8cb7a0" stroke-width="2"/>
+<rect x="660" y="418" width="400" height="56" rx="9" fill="#96d7ab"/>
+<text x="860" y="453" text-anchor="middle" font-size="21" font-weight="bold" fill="#102b24">Compatible artifact join</text>
+<path d="M860 474v30m-6-7 6 8 6-8" fill="none" stroke="#8cb7a0" stroke-width="2"/>
+<rect x="660" y="510" width="400" height="51" rx="9" fill="#1a3b30" stroke="#527866"/>
+<text x="860" y="542" text-anchor="middle" font-size="18" fill="#f6f7f0">Integration + separate review</text>
+<text x="860" y="595" text-anchor="middle" font-size="10" letter-spacing="1" fill="#a8c9b8">ILLUSTRATIVE ARCHITECTURE — NOT A LIVE RUN</text>
+</g></svg>

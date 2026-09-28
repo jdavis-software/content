@@ -10,7 +10,7 @@ import {build} from '../lib/site.mjs';
 import {loadPackage,validatePackage,configAt,fingerprints,hash} from '../lib/content.mjs';
 import {rasterInfo} from '../lib/social-image.mjs';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..'),slug='jev-decision-layer';
-async function fixture(t){const d=await mkdtemp(path.join(tmpdir(),'jev-publication-'));t.after(()=>rm(d,{recursive:true,force:true}));for(const n of ['articles','lib','site','studio.config.json'])await cp(path.join(root,n),path.join(d,n),{recursive:true});return d;}
+async function fixture(t){const d=await mkdtemp(path.join(tmpdir(),'jev-publication-'));t.after(()=>rm(d,{recursive:true,force:true}));for(const n of ['articles','lib','site','studio.config.json'])await cp(path.join(root,n),path.join(d,n),{recursive:true});for(const entry of await readdir(path.join(d,'articles')))if(!['parallel-agent-engineering','keeping-parallel-development-fast','better-context-for-ai-agents',slug].includes(entry))await rm(path.join(d,'articles',entry),{recursive:true,force:true});return d;}
 async function status(d,id,value){const p=path.join(d,'articles',id,'metadata.json'),m=JSON.parse(await readFile(p,'utf8'));m.status=value;await writeFile(p,JSON.stringify(m));}
 test('authored distributions are normalized and never represented as API results',()=>{for(const c of cases){assert.ok(Math.abs(c.probabilities.reduce((a,b)=>a+b,0)-1)<1e-9);}const a=assess();assert.equal(a.route.id,'code');assert.equal(a.status,'checked');assert.match(a.detail,/actually accessed/);});
 test('ambiguity requests more evidence instead of forcing the top route',()=>{const a=assess({caseId:'ambiguous'});assert.equal(a.status,'clarify');assert.equal(a.executed,false);});

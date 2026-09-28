@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "slug": "loops-inside-graphs",
+  "title": "Loops Inside Graphs: How I Structure Reliable Agent Workflows",
+  "description": "Local repair loops, explicit handoffs, compatible artifacts, and durable recovery: designing parallel agent workflows without confusing diagrams with guarantees.",
+  "status": "published",
+  "publicSafe": true,
+  "author": "Jordan Davis",
+  "category": "Agent architecture",
+  "createdAt": "2026-09-28",
+  "updatedAt": "2026-09-28",
+  "tags": [
+    "Agentic AI",
+    "Software Architecture",
+    "TypeScript",
+    "Go",
+    "Orchestration"
+  ],
+  "coverImage": "assets/og-loops-graphs-v1.png",
+  "coverAlt": "Two bounded worker loops join under one contract, then pass through integration checks and a separate review gate.",
+  "sourceType": "topic",
+  "publishedUrl": null,
+  "coverWidth": 1200,
+  "coverHeight": 627,
+  "coverCaption": "An illustrative control-flow design: local repair stays local; shared changes are checked at the join.",
+  "seriesOrder": 5,
+  "socialImage": {
+    "path": "assets/og-loops-graphs-v1.png",
+    "width": 1200,
+    "height": 627,
+    "alt": "Loops Inside Graphs — local feedback, explicit handoffs, and compatible results. Engineering Notes by Jordan Davis."
+  }
+}

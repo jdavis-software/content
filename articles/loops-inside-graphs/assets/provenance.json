@@ -1,0 +1,21 @@
+{
+  "cover": {
+    "method": "Original authored SVG rendered with CairoSVG; no vendor logos, model imagery, or performance measurements.",
+    "source": "cover.svg",
+    "file": "og-loops-graphs-v1.png",
+    "dimensions": [
+      1200,
+      627
+    ],
+    "sha256": "472c3b4c17ec4861018883c84f91f2192720dcda2dffa804b0d852d7026cf6ba"
+  },
+  "interactive": {
+    "method": "Authored state-transition teaching fixture, no external calls",
+    "paths": [
+      "site/loop-graph-model.js",
+      "lib/loop-graph-explorer.mjs",
+      "site/loop-graph-explorer.js",
+      "site/loop-graph-explorer.css"
+    ]
+  }
+}
