@@ -19,7 +19,7 @@
   "coverImage": "assets/og-loops-graphs-v1.png",
   "coverAlt": "Two bounded worker loops join under one contract, then pass through integration checks and a separate review gate.",
   "sourceType": "topic",
-  "publishedUrl": null,
+  "publishedUrl": "https://jdavis-software.github.io/content/articles/loops-inside-graphs/",
   "coverWidth": 1200,
   "coverHeight": 627,
   "coverCaption": "An illustrative control-flow design: local repair stays local; shared changes are checked at the join.",
