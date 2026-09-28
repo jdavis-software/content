@@ -9,7 +9,13 @@
   "category": "Agent architecture",
   "createdAt": "2026-09-28",
   "updatedAt": "2026-09-28",
-  "tags": ["Agentic AI", "Software Architecture", "TypeScript", "Go", "Orchestration"],
+  "tags": [
+    "Agentic AI",
+    "Software Architecture",
+    "TypeScript",
+    "Go",
+    "Orchestration"
+  ],
   "coverImage": "assets/og-loops-graphs-v1.png",
   "coverAlt": "Two bounded worker loops join under one contract, then pass through integration checks and a separate review gate.",
   "sourceType": "topic",

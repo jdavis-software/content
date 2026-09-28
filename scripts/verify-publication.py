@@ -61,6 +61,11 @@ def verify():
             assert hashlib.sha256(image_bytes).digest() == hashlib.sha256((directory / image['path']).read_bytes()).digest(), 'Stale social image'
         if meta['slug'] in ['parallel-agent-engineering','keeping-parallel-development-fast']:
             assert b'id="devops-invalidation"' in body
+        if meta['slug'] == 'loops-inside-graphs':
+            assert b'id="loop-graph-explorer"' in body
+            assert b'Authored illustration only' in body
+            assert b'The join is an engineering decision' in body
+            assert b'not a newly verified Andrew Ng PDF' in body
         if meta['slug'] == 'jev-decision-layer':
             assert b'id="jev-decision-explorer"' in body
             assert b'Probabilities are authored' in body
@@ -88,7 +93,7 @@ def verify():
         body, _ = fetch(BASE + feed)
         for directory, meta in articles:
             assert ('/articles/' + meta['slug'] + '/').encode() in body
-    for relative in ['jev-model.js','jev-explorer.js','jev-explorer.css','context-model.js','context-explorer.js','context-explorer.css','style.css','client.js','devops-flow.js','devops-model.js','devops-flow.css','agent-flow.js','agent-flow-model.js','agent-flow.css','vendor/anime-4.5.0.esm.min.js']:
+    for relative in ['loop-graph-model.js','loop-graph-explorer.js','loop-graph-explorer.css','jev-model.js','jev-explorer.js','jev-explorer.css','context-model.js','context-explorer.js','context-explorer.css','style.css','client.js','devops-flow.js','devops-model.js','devops-flow.css','agent-flow.js','agent-flow-model.js','agent-flow.css','vendor/anime-4.5.0.esm.min.js']:
         data, _ = fetch(BASE + relative)
         assert hashlib.sha256(data).digest() == hashlib.sha256((ROOT / 'site' / relative).read_bytes()).digest(), 'Stale browser asset: ' + relative
     print('VERIFIED homepage, both feeds, and exact browser assets. LinkedIn crawler not invoked.')
